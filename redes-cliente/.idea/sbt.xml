@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaSbtSettings">
+    <option name="customVMPath" value="C:/Program Files (x86)/Java/jdk1.8.0_161" />
+    <option name="maximumHeapSize" value="512" />
+  </component>
+</project>
