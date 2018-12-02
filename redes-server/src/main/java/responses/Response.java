@@ -12,6 +12,6 @@ public class Response {
 
         Gson gson = new Gson();
 
-        return gson.toJson(this);
+        return gson.toJson(this) + "\n";
     }
 }

@@ -34,33 +34,34 @@ public class TCPServer {
             requisicao.acao = requisicao.acao.toLowerCase();
 
             Response response = new Response();
-            if("registrar".equals(requisicao.acao)){
-
-            }else if("login".equals(requisicao.acao)){
-
-            }else if("logoff".equals(requisicao.acao)){
-
-            }else if("mover".equals(requisicao.acao)){
-
-            }else if("atacar".equals(requisicao.acao)){
-
-            }else if("ver".equals(requisicao.acao)){
-
-            }else if("usar".equals(requisicao.acao)){
-
-            }else if("conversar".equals(requisicao.acao)){
-
-            }else if("sair".equals(requisicao.acao)){
-
-            }else if("vender".equals(requisicao.acao)){
-
-            }else if("comprar".equals(requisicao.acao)){
-
-            }else{
-                String resposta = response.createResponse(ResponseTypes.COMANDO_INVALIDO);
-                outToClient.writeBytes(resposta);
+            switch(requisicao.acao){
+                case "registrar":
+                    break;
+                case "login":
+                    break;
+                case "logoff":
+                    break;
+                case "mover":
+                    break;
+                case "atacar":
+                    break;
+                case "ver":
+                    break;
+                case "usar":
+                    break;
+                case "conversar":
+                    break;
+                case "sair":
+                    break;
+                case "vender":
+                    break;
+                case "comprar":
+                    break;
+                default:
+                    String resposta = response.createResponse(ResponseTypes.COMANDO_INVALIDO);
+                    outToClient.writeBytes(resposta);
+                    break;
             }
-
 		}
 
 	}

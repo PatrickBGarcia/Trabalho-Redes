@@ -68,6 +68,7 @@ public class Personagem {
                 dano += this.equipamentos.sword.dano;
             }
         }
+        dano += this.forca;
         this.dano = dano;
     }
 
@@ -93,6 +94,7 @@ public class Personagem {
                 defesa += this.equipamentos.sword.defesa;
             }
         }
+        defesa += this.defesa;
         this.defesa = defesa;
     }
 

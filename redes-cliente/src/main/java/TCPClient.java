@@ -1,27 +1,35 @@
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 import java.io.*;
 import java.net.*;
 
-public class TCPClient {
+public class TCPClient extends Application {
 
-	public static void main(String[] args) throws Exception{
+    @Override
+    public void start(Stage stage) throws Exception {
+        Platform.setImplicitExit(true);
+        stage.setOnCloseRequest(event -> {
+            System.exit(0);
+            Platform.exit();
+        });
 
-		String sentence;
-		String modifiedSentence;
-		//cria stream de entrada
-		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
-		//cria socket cliente, conecta ao servidor
-		Socket clientSocket = new Socket("localhost", 6666);
-		//cria stream de saida, ligada ao socket
-		DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-		//cria stream de entrada ligada ao socket
-		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		sentence = inFromUser.readLine();
-		//envia linha para o servidor
-		outToServer.writeBytes(sentence+'\n');
-		modifiedSentence = inFromServer.readLine();
-		//lê linha do servidor
-		System.out.println("From server: "+modifiedSentence);		
-		clientSocket.close();
+        Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client.fxml"));
+        Parent root = loader.load();
+        ClientController tela = loader.getController();
+        tela.stage = stage;
+
+
+        Scene scene = new Scene(root);
+        stage.setTitle("Anglo RPG");
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
 	}
 
 }
