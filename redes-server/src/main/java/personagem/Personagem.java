@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Personagem {
     public final String nome;
     public int nivel = 1;
+    public int ouro = 0;
     public int exp = 0;
     public int expProxLevel = 100;
     public int forca = 5;
@@ -130,6 +131,14 @@ public class Personagem {
             return true;
         }
         return false;
+    }
+
+    public void aumentarOuro(int valor){
+        this.ouro += valor;
+    }
+
+    public void diminuirOuro(int valor){
+        this.ouro -= valor;
     }
 
 }
