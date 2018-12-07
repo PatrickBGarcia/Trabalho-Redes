@@ -6,16 +6,14 @@ import personagem.Personagem;
 
 @DatabaseTable(tableName = "usuario")
 public class Usuario {
-    @DatabaseField(id = true)
+    @DatabaseField(generatedId = true)
     public int id;
     @DatabaseField
     public String usuario;
     @DatabaseField
     public String senha;
 
-    public Usuario(){
-
-    }
+    public Usuario(){}
 
     public int getId() {
         return id;

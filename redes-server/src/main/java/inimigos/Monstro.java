@@ -1,20 +1,41 @@
 package inimigos;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 import itens.Item;
 
 import java.util.ArrayList;
 import java.util.Random;
 
+@DatabaseTable(tableName = "monstro")
 public class Monstro {
+    @DatabaseField
     public String nome;
+    @DatabaseField
     public int vidaAtual;
+    @DatabaseField
     public int vidaMax;
+    @DatabaseField
     public int expDada;
+    @DatabaseField
     public int ouroDado;
+    @DatabaseField
     public int nivel;
+    @DatabaseField
     public int defesa;
+    @DatabaseField
     public int dano;
+    @DatabaseField
     public ArrayList<Item> drop = new ArrayList<Item>();
+
+    public Monstro(){}
+
+    public String getNome() {
+        return nome;
+    }
+
+
+
 
     public Monstro(int nivel, String nome){
         this.nome = nome;
@@ -67,4 +88,73 @@ public class Monstro {
 
         return itensDropados;
     }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getVidaAtual() {
+        return vidaAtual;
+    }
+
+    public void setVidaAtual(int vidaAtual) {
+        this.vidaAtual = vidaAtual;
+    }
+
+    public int getVidaMax() {
+        return vidaMax;
+    }
+
+    public void setVidaMax(int vidaMax) {
+        this.vidaMax = vidaMax;
+    }
+
+    public int getExpDada() {
+        return expDada;
+    }
+
+    public void setExpDada(int expDada) {
+        this.expDada = expDada;
+    }
+
+    public int getOuroDado() {
+        return ouroDado;
+    }
+
+    public void setOuroDado(int ouroDado) {
+        this.ouroDado = ouroDado;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
+
+    public int getDefesa() {
+        return defesa;
+    }
+
+    public void setDefesa(int defesa) {
+        this.defesa = defesa;
+    }
+
+    public int getDano() {
+        return dano;
+    }
+
+    public void setDano(int dano) {
+        this.dano = dano;
+    }
+
+    public ArrayList<Item> getDrop() {
+        return drop;
+    }
+
+    public void setDrop(ArrayList<Item> drop) {
+        this.drop = drop;
+    }
+
 }
