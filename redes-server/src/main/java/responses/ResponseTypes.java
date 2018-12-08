@@ -3,7 +3,7 @@ package responses;
 public enum ResponseTypes {
     SUCESSO, USUARIO_JA_EXISTE, SENHAS_DIFERENTES, USUARIO_NAO_EXISTE, SENHA_INCORRETA, MOVER_INVALIDO, ATACAR_INVALIDO, VER_INVALIDO,
     USAR_INVALIDO, CONVERSAR_INVALIDO, COMPRA_VENDA_ITEM_NAO_ENCONTRADO, SEM_QUANTIDADE_PRA_VENDER, SEM_OURO_SUFICIENTE,
-    COMANDO_INVALIDO;
+    COMANDO_INVALIDO, ERRO_INTERNO;
 
     public String getDescricao(){
         switch(this){
@@ -35,8 +35,11 @@ public enum ResponseTypes {
                 return "Você não possui ouro suficiente";
             case COMANDO_INVALIDO:
                 return "Comando invalido";
+            case ERRO_INTERNO:
+                return "Erro interno";
+
                 default:
-                    return "";
+                    return "Erro interno";
         }
     }
 
@@ -70,6 +73,8 @@ public enum ResponseTypes {
                 return -12;
             case COMANDO_INVALIDO:
                 return 0;
+            case ERRO_INTERNO:
+                return 500;
 
                 default:
                     return 500;

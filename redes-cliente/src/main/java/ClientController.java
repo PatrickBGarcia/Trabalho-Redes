@@ -1,7 +1,5 @@
 import com.google.gson.Gson;
 import itens.Item;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,10 +24,10 @@ import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
 
-    private final String ip = "localhost";
-    private final int porta = 6666;
-
     public Stage stage;
+
+    private final String ip = "localhost";
+    private final int porta = 666;
 
     //PERSONAGEM
     @FXML
@@ -74,6 +72,9 @@ public class ClientController implements Initializable {
     public Button btnEnviar;
 
 
+    Socket clientSocket = null;
+
+
     public void initialize(URL location, ResourceBundle resources) {
         txtComando.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -93,13 +94,6 @@ public class ClientController implements Initializable {
 
 
     public Response sendContent(String json){
-        Socket clientSocket;
-        try {
-            clientSocket = new Socket(this.ip, this.porta);
-        } catch (IOException e) {
-            this.txtHistorico.appendText("PROBLEMAS DE COMUNICAÇÃO COM " + this.ip + " porta " + this.porta + "\n");
-            return null;
-        }
 
         DataOutputStream outToServer;
         try {
@@ -117,6 +111,7 @@ public class ClientController implements Initializable {
             return null;
         }
 
+        //outToServer = null;
         try {
             outToServer.writeBytes(json+"\n");
         } catch (IOException e) {
@@ -167,6 +162,14 @@ public class ClientController implements Initializable {
         }
 
         String[] parsedText = mensagem.split(" ");
+
+        if(this.clientSocket == null){
+            if( !("registrar".equals(parsedText[0])) && !("login".equals(parsedText[0]))) {
+                this.txtHistorico.appendText("Para começar, registre-se ou faça login\n");
+                return;
+            }
+        }
+
         selecionarComandoEEnviar(parsedText);
     }
 
@@ -174,7 +177,6 @@ public class ClientController implements Initializable {
         Gson gson = new Gson();
         Requisicao requisicao = new Requisicao();
         Response response;
-        String retorno;
 
         switch(parsedText[0]){
             case "registrar":
@@ -183,6 +185,28 @@ public class ClientController implements Initializable {
                             "-> registrar usuario senha senha\n");
                     return;
                 }
+
+                if(this.clientSocket != null){
+                    try {
+                        this.clientSocket.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        this.clientSocket = new Socket(this.ip, this.porta);
+                    } catch (IOException e) {
+                        this.txtHistorico.appendText("Problemas para estabelecer conexão com " + this.ip + " porta " + this.porta + "\n");
+                        return;
+                    }
+                }else {
+                    try {
+                        this.clientSocket = new Socket(this.ip, this.porta);
+                    } catch (IOException e) {
+                        this.txtHistorico.appendText("Problemas para estabelecer conexão com " + this.ip + " porta " + this.porta + "\n");
+                        return;
+                    }
+                }
+
                 requisicao.acao = parsedText[0];
                 requisicao.argumentos = new String[3];
                 requisicao.argumentos[0] = parsedText[1];
@@ -205,6 +229,27 @@ public class ClientController implements Initializable {
                     this.txtHistorico.appendText("Quantidade de parâmetros inválida, devem ser 3\n" +
                             "-> login usuario senha\n");
                     return;
+                }
+
+                if(this.clientSocket != null){
+                    try {
+                        this.clientSocket.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        this.clientSocket = new Socket(this.ip, this.porta);
+                    } catch (IOException e) {
+                        this.txtHistorico.appendText("Problemas para estabelecer conexão com " + this.ip + " porta " + this.porta + "\n");
+                        return;
+                    }
+                }else {
+                    try {
+                        this.clientSocket = new Socket(this.ip, this.porta);
+                    } catch (IOException e) {
+                        this.txtHistorico.appendText("Problemas para estabelecer conexão com " + this.ip + " porta " + this.porta + "\n");
+                        return;
+                    }
                 }
 
                 requisicao.acao = parsedText[0];
