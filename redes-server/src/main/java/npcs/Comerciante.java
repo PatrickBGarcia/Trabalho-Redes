@@ -8,12 +8,13 @@ import itens.Item;
 import java.util.ArrayList;
 @DatabaseTable(tableName = "comerciante")
 public class Comerciante {
-
+    @DatabaseField(generatedId = true)
+    public int id;
     @DatabaseField
     public String nome;
-    @DatabaseField(foreign = true)
+    //@DatabaseField(foreign = true) VERIFICAR ARRAYLIST
     public ArrayList<Item> itensAVenda = new ArrayList<Item>();
-    //o que é isso, jovial?
+
     public ArrayList<Item> ofertas(){
         return this.itensAVenda;
     }

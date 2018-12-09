@@ -1,35 +1,36 @@
 package entities;
 
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
+import java.io.IOException;
 import java.sql.*;
 
 public class MysqlConnection {
-    private static String url = "jdbc:mysql://localhost:3306/";
-    private static String dbName = "redes";
-    private static String driver = "com.mysql.jdbc.Driver";
-    private static String userName = "root";
-    private static String dbpassword = "";
+    private String url = "jdbc:mysql://localhost:3306/ds";
+    private String dbName = "ds";
+    private String userName = "root";
+    private String dbpassword = "1234";
+    public ConnectionSource connectionSource;
 
 
-    public static String executeQuery(String sql){
-        try {
-            Class.forName(driver);
-            Connection c = DriverManager.getConnection(url+dbName,userName,dbpassword);
-            Statement st = c.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            // Closing the statement and connection
-            st.close();
-            c.close();
-            return rs.toString();
-        } catch (ClassNotFoundException e) {
-            System.out.println("Nao encontrado drive de comunicacao com mysql");
-            return null;
-        } catch (SQLException e) {
-            System.out.printf("Erro na execucao da query");
-            return null;
-        } catch (Exception e){
-            System.out.println("Erro inesperado: " + e.getStackTrace());
-            return null;
-        }
+    public <T> Boolean createTable(T objeto) throws SQLException, IOException {
+        openConnection();
+        TableUtils.createTable(connectionSource, objeto.getClass());
+        closeConnection();
+        return true;
     }
+
+    public void openConnection() throws SQLException {
+        connectionSource = new JdbcConnectionSource(url, userName, dbpassword);
+    }
+
+    public void closeConnection() throws IOException {
+        connectionSource.close();
+    }
+
+
 
 }

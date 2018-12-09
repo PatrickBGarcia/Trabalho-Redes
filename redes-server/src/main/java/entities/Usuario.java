@@ -8,9 +8,9 @@ import personagem.Personagem;
 public class Usuario {
     @DatabaseField(generatedId = true)
     public int id;
-    @DatabaseField
+    @DatabaseField(canBeNull = false)
     public String usuario;
-    @DatabaseField
+    @DatabaseField(canBeNull = false)
     public String senha;
 
     public Usuario(){}

@@ -9,23 +9,29 @@ import java.util.Random;
 
 @DatabaseTable(tableName = "monstro")
 public class Monstro {
-    @DatabaseField
+    @DatabaseField(generatedId = true)
+    public int id;
+    @DatabaseField(canBeNull = false)
     public String nome;
-    @DatabaseField
+    @DatabaseField(canBeNull = false)
     public int vidaAtual;
-    @DatabaseField
+    @DatabaseField(canBeNull = false)
     public int vidaMax;
-    @DatabaseField
+    @DatabaseField(canBeNull = false)
     public int expDada;
-    @DatabaseField
+    @DatabaseField(canBeNull = false)
     public int ouroDado;
-    @DatabaseField
+    @DatabaseField(canBeNull = false)
     public int nivel;
-    @DatabaseField
+    @DatabaseField(canBeNull = false)
     public int defesa;
-    @DatabaseField
+    @DatabaseField(canBeNull = false)
     public int dano;
     @DatabaseField
+    public TipoMonstro tipoMonstro = TipoMonstro.MONSTRO;
+
+
+    //@DatabaseField
     public ArrayList<Item> drop = new ArrayList<Item>();
 
     public Monstro(){}
@@ -155,6 +161,14 @@ public class Monstro {
 
     public void setDrop(ArrayList<Item> drop) {
         this.drop = drop;
+    }
+
+    public TipoMonstro getTipoMonstro() {
+        return tipoMonstro;
+    }
+
+    public void setTipoMonstro(TipoMonstro tipoMonstro) {
+        this.tipoMonstro = tipoMonstro;
     }
 
 }

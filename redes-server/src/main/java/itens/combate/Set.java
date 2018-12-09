@@ -2,9 +2,14 @@ package itens.combate;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import personagem.Personagem;
 
 @DatabaseTable(tableName = "set")
 public class Set {
+    @DatabaseField
+    public int id;
+    @DatabaseField(foreign = true)
+    public Personagem personagem;
     @DatabaseField
     public Capacete helmet;
     @DatabaseField

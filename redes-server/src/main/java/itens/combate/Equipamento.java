@@ -1,14 +1,9 @@
 package itens.combate;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 import itens.Item;
 
-@DatabaseTable(tableName = "equipamento")
 public class Equipamento extends Item {
-    @DatabaseField
     public int dano;
-    @DatabaseField
     public int defesa;
     public Equipamento(){}
 

@@ -65,7 +65,7 @@ public class ProcessarRequisicao implements Runnable{
                             //}else{
                             resposta = response.createResponse(ResponseTypes.SUCESSO);
                             outToClient.writeBytes(resposta);
-                            personagem = new Personagem(requisicao.argumentos[0]);
+                            personagem = new Personagem(requisicao.argumentos[0],requisicao.argumentos[1]);
                             resposta = new Gson().toJson(personagem) + "\n";
                             //}
                         }
@@ -79,7 +79,7 @@ public class ProcessarRequisicao implements Runnable{
                         //  }else{
                         resposta = response.createResponse(ResponseTypes.SUCESSO);
                         outToClient.writeBytes(resposta);
-                        personagem = new Personagem(requisicao.argumentos[0]);//CARREGA DO BANCO
+                        personagem = new Personagem(requisicao.argumentos[0], requisicao.argumentos[1]);//CARREGA DO BANCO
                         resposta = new Gson().toJson(personagem) + "\n";
                         // }else{
                         //  resposta = response.createResponse(ResponseTypes.USUARIO_NAO_EXISTE);
@@ -110,7 +110,7 @@ public class ProcessarRequisicao implements Runnable{
                         outToClient.writeBytes(resposta);
                         //batalha
                         //if(ganhou){
-                        //personagem.aumentaExp(expMonstro);
+                        personagem.aumentaExp(20);
                         //ganhaLoot
                         //}else{
                         //personagem.morrer();

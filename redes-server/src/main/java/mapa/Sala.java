@@ -1,11 +1,15 @@
 package mapa;
 
+import com.j256.ormlite.field.DatabaseField;
 import inimigos.Monstro;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 public class Sala {
+    @DatabaseField
+    public int id;
+    @DatabaseField
     public final String nome;
     public Map<Direcao, Sala> salaAoRedor;
     public ArrayList<Monstro> monstros = new ArrayList<>();

@@ -10,35 +10,39 @@ import java.util.ArrayList;
 
 @DatabaseTable(tableName = "personagem")
 public class Personagem {
-    @DatabaseField
+    @DatabaseField(generatedId = true)
+    public int id;
+    @DatabaseField(canBeNull = false)
     public String nome;
-    //public final String nome;     tive que criar um atributo nome sem ser final pro construtor do ORMLite
-    @DatabaseField
+    @DatabaseField(canBeNull = false)
+    public String senha;
+    @DatabaseField(canBeNull = false)
     public int nivel = 1;
-    @DatabaseField
+    @DatabaseField(canBeNull = false)
     public int ouro = 0;
-    @DatabaseField
+    @DatabaseField(canBeNull = false)
     public int exp = 0;
-    @DatabaseField
+    @DatabaseField(canBeNull = false)
     public int expProxLevel = 100;
-    @DatabaseField
+    @DatabaseField(canBeNull = false)
     public int forca = 5;
-    @DatabaseField
+    @DatabaseField(canBeNull = false)
     public int vidaAtual = 20;
-    @DatabaseField
+    @DatabaseField(canBeNull = false)
     public int vidaMax = 20;
-    @DatabaseField
+    @DatabaseField(canBeNull = false)
     public int defesa = 0;
-    @DatabaseField
+    @DatabaseField(canBeNull = false)
     public int dano = 5;
-    @DatabaseField
-    public Set equipamentos = new Set();
     @DatabaseField(foreign = true)
+    public Set equipamentos = new Set();
+    //@DatabaseField(foreign = true)   PESQUISAR ARRAY NO ORMLite
     public ArrayList<Item> inventario = new ArrayList<Item>();
 
     public Personagem(){}
-    public Personagem(String nome){
+    public Personagem(String nome,String senha){
         this.nome = nome;
+        this.senha = senha;
     }
 
     public void aumentaExp(int exp){
@@ -60,7 +64,7 @@ public class Personagem {
     }
 
     public Personagem morrer(){
-        return new Personagem(this.nome);
+        return new Personagem(this.nome,this.senha);
     }
 
     public void recalculaDano(){
