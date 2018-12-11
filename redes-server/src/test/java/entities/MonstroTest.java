@@ -25,7 +25,7 @@ public class MonstroTest {
         MysqlConnection mysqlConnection = new MysqlConnection();
         //mysqlConnection.createTable(new Monstro());
         Monstro monstro = new Monstro();
-        monstro.setNome("Luciana");
+        monstro.setNome("Monstro Test");
         monstro.setVidaAtual(1000);
         monstro.setVidaMax(1000);
         monstro.setExpDada(666);

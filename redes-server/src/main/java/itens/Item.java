@@ -6,9 +6,9 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "item")
 public class Item {
     @DatabaseField(generatedId = true)
-    public int id;
-    @DatabaseField
-    public String nome;
+    private int id;
+    @DatabaseField(canBeNull = false)
+    private String nome;
     @DatabaseField
     public int valor;
     @DatabaseField
@@ -56,5 +56,45 @@ public class Item {
 
     public void setRaridade(Raridade raridade) {
         this.raridade = raridade;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getDano() {
+        return dano;
+    }
+
+    public void setDano(int dano) {
+        this.dano = dano;
+    }
+
+    public int getDefesa() {
+        return defesa;
+    }
+
+    public void setDefesa(int defesa) {
+        this.defesa = defesa;
+    }
+
+    public int getVidaRegenerada() {
+        return vidaRegenerada;
+    }
+
+    public void setVidaRegenerada(int vidaRegenerada) {
+        this.vidaRegenerada = vidaRegenerada;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }

@@ -10,23 +10,23 @@ import java.util.Random;
 @DatabaseTable(tableName = "monstro")
 public class Monstro {
     @DatabaseField(generatedId = true)
-    public int id;
+    private int id;
     @DatabaseField(canBeNull = false)
-    public String nome;
+    private String nome;
     @DatabaseField(canBeNull = false)
-    public int vidaAtual;
+    private int vidaAtual;
     @DatabaseField(canBeNull = false)
-    public int vidaMax;
+    private int vidaMax;
     @DatabaseField(canBeNull = false)
-    public int expDada;
+    private int expDada;
     @DatabaseField(canBeNull = false)
-    public int ouroDado;
+    private int ouroDado;
     @DatabaseField(canBeNull = false)
-    public int nivel;
+    private int nivel;
     @DatabaseField(canBeNull = false)
-    public int defesa;
+    private int defesa;
     @DatabaseField(canBeNull = false)
-    public int dano;
+    private int dano;
     @DatabaseField
     public TipoMonstro tipoMonstro = TipoMonstro.MONSTRO;
 
@@ -171,4 +171,7 @@ public class Monstro {
         this.tipoMonstro = tipoMonstro;
     }
 
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 }

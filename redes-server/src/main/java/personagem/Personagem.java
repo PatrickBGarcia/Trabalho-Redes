@@ -11,41 +11,41 @@ import java.util.ArrayList;
 @DatabaseTable(tableName = "personagem")
 public class Personagem {
     @DatabaseField(generatedId = true)
-    public int id;
+    private int id;
     @DatabaseField(canBeNull = false)
-    public String nome;
+    private String nome;
     @DatabaseField(canBeNull = false)
-    public String senha;
+    private String senha;
     @DatabaseField(canBeNull = false)
-    public int nivel = 1;
+    private int nivel = 1;
     @DatabaseField(canBeNull = false)
-    public int ouro = 0;
+    private int ouro = 0;
     @DatabaseField(canBeNull = false)
-    public int exp = 0;
+    private int exp = 0;
     @DatabaseField(canBeNull = false)
-    public int expProxLevel = 100;
+    private int expProxLevel = 100;
     @DatabaseField(canBeNull = false)
-    public int forca = 5;
+    private int forca = 5;
     @DatabaseField(canBeNull = false)
-    public int vidaAtual = 20;
+    private int vidaAtual = 20;
     @DatabaseField(canBeNull = false)
-    public int vidaMax = 20;
+    private int vidaMax = 20;
     @DatabaseField(canBeNull = false)
-    public int defesa = 0;
+    private int defesa = 0;
     @DatabaseField(canBeNull = false)
-    public int dano = 5;
-    @DatabaseField
-    public Capacete capacete;
-    @DatabaseField
-    public Armadura armadura;
-    @DatabaseField
-    public Espada espada;
-    @DatabaseField
-    public Escudo escudo;
-    @DatabaseField
-    public Perneira perneira;
-    @DatabaseField
-    public Calcado calcado;
+    private int dano = 5;
+    @DatabaseField(foreign=true)
+    private Capacete capacete;
+    @DatabaseField(foreign=true)
+    private Armadura armadura;
+    @DatabaseField(foreign=true)
+    private Espada espada;
+    @DatabaseField(foreign=true)
+    private Escudo escudo;
+    @DatabaseField(foreign=true)
+    private Perneira perneira;
+    @DatabaseField(foreign=true)
+    private Calcado calcado;
     //@DatabaseField(foreign = true)   PESQUISAR ARRAY NO ORMLite
     public ArrayList<Item> inventario = new ArrayList<>();
 
@@ -158,6 +158,38 @@ public class Personagem {
         }
         return false;
     }
+
+    public int getId() {return id;}
+
+    public void setId(int id) {this.id = id;}
+
+    public String getSenha() { return senha;}
+
+    public void setSenha(String senha) { this.senha = senha; }
+
+    public Capacete getCapacete() {return capacete;}
+
+    public void setCapacete(Capacete capacete) { this.capacete = capacete; }
+
+    public Armadura getArmadura() { return armadura; }
+
+    public void setArmadura(Armadura armadura) { this.armadura = armadura;}
+
+    public Espada getEspada() { return espada;}
+
+    public void setEspada(Espada espada) { this.espada = espada; }
+
+    public Escudo getEscudo() {return escudo;}
+
+    public void setEscudo(Escudo escudo) {this.escudo = escudo; }
+
+    public Perneira getPerneira() { return perneira;}
+
+    public void setPerneira(Perneira perneira) { this.perneira = perneira; }
+
+    public Calcado getCalcado() { return calcado;}
+
+    public void setCalcado(Calcado calcado) { this.calcado = calcado; }
 
     public void aumentarOuro(int valor){
         this.ouro += valor;
