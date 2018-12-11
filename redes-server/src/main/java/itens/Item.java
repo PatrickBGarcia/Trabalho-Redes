@@ -1,7 +1,9 @@
 package itens;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
+import npcs.Comerciante;
 
 @DatabaseTable(tableName = "item")
 public class Item {
@@ -18,6 +20,8 @@ public class Item {
     @DatabaseField
     public int vidaRegenerada;
 
+    @DatabaseField(foreign = true)
+    private Comerciante comerciante;
 
     @DatabaseField
     public Raridade raridade;

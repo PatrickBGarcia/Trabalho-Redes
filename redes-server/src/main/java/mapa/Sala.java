@@ -1,16 +1,18 @@
 package mapa;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 import inimigos.Monstro;
 
 import java.util.ArrayList;
 import java.util.Map;
 
+@DatabaseTable(tableName = "sala")
 public class Sala {
-    @DatabaseField
-    public int id;
-    @DatabaseField
-    public final String nome;
+    @DatabaseField(generatedId = true)
+    private int id;
+    @DatabaseField(canBeNull = false)
+    private final String nome;
     public Map<Direcao, Sala> salaAoRedor;
     public ArrayList<Monstro> monstros = new ArrayList<>();
 
@@ -40,4 +42,31 @@ public class Sala {
         this.monstros.remove(monstro);
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public Map<Direcao, Sala> getSalaAoRedor() {
+        return salaAoRedor;
+    }
+
+    public void setSalaAoRedor(Map<Direcao, Sala> salaAoRedor) {
+        this.salaAoRedor = salaAoRedor;
+    }
+
+    public ArrayList<Monstro> getMonstros() {
+        return monstros;
+    }
+
+    public void setMonstros(ArrayList<Monstro> monstros) {
+        this.monstros = monstros;
+    }
 }
