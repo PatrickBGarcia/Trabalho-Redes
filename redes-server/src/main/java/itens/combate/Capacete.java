@@ -1,5 +1,7 @@
 package itens.combate;
 
-public class Capacete extends Equipamento {
+import itens.Item;
+
+public class Capacete extends Item {
     public Capacete(){}
 }

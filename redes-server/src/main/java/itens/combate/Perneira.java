@@ -1,6 +1,8 @@
 package itens.combate;
 
-public class Perneira extends Equipamento {
+import itens.Item;
+
+public class Perneira extends Item {
     public Perneira(){
     }
 }

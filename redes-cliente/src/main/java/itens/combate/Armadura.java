@@ -1,4 +1,6 @@
 package itens.combate;
 
-public class Armadura extends Equipamento {
+import itens.Item;
+
+public class Armadura extends Item {
 }

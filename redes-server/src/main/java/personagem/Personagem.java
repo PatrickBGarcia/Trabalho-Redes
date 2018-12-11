@@ -3,7 +3,7 @@ package personagem;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import itens.Item;
-import itens.combate.Set;
+import itens.combate.*;
 import itens.consumivel.Pot;
 
 import java.util.ArrayList;
@@ -34,10 +34,20 @@ public class Personagem {
     public int defesa = 0;
     @DatabaseField(canBeNull = false)
     public int dano = 5;
-    @DatabaseField(foreign = true)
-    public Set equipamentos = new Set();
+    @DatabaseField
+    public Capacete capacete;
+    @DatabaseField
+    public Armadura armadura;
+    @DatabaseField
+    public Espada espada;
+    @DatabaseField
+    public Escudo escudo;
+    @DatabaseField
+    public Perneira perneira;
+    @DatabaseField
+    public Calcado calcado;
     //@DatabaseField(foreign = true)   PESQUISAR ARRAY NO ORMLite
-    public ArrayList<Item> inventario = new ArrayList<Item>();
+    public ArrayList<Item> inventario = new ArrayList<>();
 
     public Personagem(){}
     public Personagem(String nome,String senha){
@@ -69,25 +79,23 @@ public class Personagem {
 
     public void recalculaDano(){
         int dano = 0;
-        if(this.equipamentos != null){
-            if(this.equipamentos.armor != null){
-                dano += this.equipamentos.armor.dano;
-            }
-            if(this.equipamentos.helmet != null){
-                dano += this.equipamentos.helmet.dano;
-            }
-            if(this.equipamentos.legs != null){
-                dano += this.equipamentos.legs.dano;
-            }
-            if(this.equipamentos.shield != null){
-                dano += this.equipamentos.shield.dano;
-            }
-            if(this.equipamentos.shoes != null){
-                dano += this.equipamentos.shoes.dano;
-            }
-            if(this.equipamentos.sword != null){
-                dano += this.equipamentos.sword.dano;
-            }
+        if(this.capacete != null){
+            dano += this.capacete.dano;
+        }
+        if(this.armadura != null){
+            dano += this.armadura.dano;
+        }
+        if(this.espada != null){
+            dano += this.espada.dano;
+        }
+        if(this.escudo != null){
+            dano += this.escudo.dano;
+        }
+        if(this.perneira != null){
+            dano += this.perneira.dano;
+        }
+        if(this.calcado != null){
+            dano += this.calcado.dano;
         }
         dano += this.forca;
         this.dano = dano;
@@ -95,25 +103,23 @@ public class Personagem {
 
     public void recalculaDefesa(){
         int defesa = 0;
-        if(this.equipamentos != null){
-            if(this.equipamentos.armor != null){
-                defesa += this.equipamentos.armor.defesa;
-            }
-            if(this.equipamentos.helmet != null){
-                defesa += this.equipamentos.helmet.defesa;
-            }
-            if(this.equipamentos.legs != null){
-                defesa += this.equipamentos.legs.defesa;
-            }
-            if(this.equipamentos.shield != null){
-                defesa += this.equipamentos.shield.defesa;
-            }
-            if(this.equipamentos.shoes != null){
-                defesa += this.equipamentos.shoes.defesa;
-            }
-            if(this.equipamentos.sword != null){
-                defesa += this.equipamentos.sword.defesa;
-            }
+        if(this.capacete != null){
+            defesa += this.capacete.defesa;
+        }
+        if(this.armadura != null){
+            defesa += this.armadura.defesa;
+        }
+        if(this.espada != null){
+            defesa += this.espada.defesa;
+        }
+        if(this.escudo != null){
+            defesa += this.escudo.defesa;
+        }
+        if(this.perneira != null){
+            defesa += this.perneira.defesa;
+        }
+        if(this.calcado != null){
+            defesa += this.calcado.defesa;
         }
         defesa += this.defesa;
         this.defesa = defesa;
@@ -239,14 +245,6 @@ public class Personagem {
 
     public void setDano(int dano) {
         this.dano = dano;
-    }
-
-    public Set getEquipamentos() {
-        return equipamentos;
-    }
-
-    public void setEquipamentos(Set equipamentos) {
-        this.equipamentos = equipamentos;
     }
 
     public ArrayList<Item> getInventario() {

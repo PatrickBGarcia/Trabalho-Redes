@@ -490,42 +490,40 @@ public class ClientController implements Initializable {
         this.vida.setText(personagem.vidaAtual + "/" + personagem.vidaMax);
         this.forca.setText(personagem.forca + "");
 
-        if(personagem.equipamentos != null) {
-            if (personagem.equipamentos.helmet != null) {
-                this.capacete.setText(personagem.equipamentos.helmet.nome);
-            }else{
-                this.capacete.setText("");
-            }
+        if (personagem.capacete != null) {
+            this.capacete.setText(personagem.capacete.nome);
+        }else{
+            this.capacete.setText("");
+        }
 
-            if (personagem.equipamentos.armor != null) {
-                this.armadura.setText(personagem.equipamentos.armor.nome);
-            }else{
-                this.armadura.setText("");
-            }
+        if (personagem.armadura != null) {
+            this.armadura.setText(personagem.armadura.nome);
+        }else{
+            this.armadura.setText("");
+        }
 
-            if (personagem.equipamentos.sword != null) {
-                this.espada.setText(personagem.equipamentos.sword.nome);
-            }else{
-                this.espada.setText("");
-            }
+        if (personagem.espada != null) {
+            this.espada.setText(personagem.espada.nome);
+        }else{
+            this.espada.setText("");
+        }
 
-            if (personagem.equipamentos.shield != null) {
-                this.escudo.setText(personagem.equipamentos.shield.nome);
-            }else{
-                this.escudo.setText("");
-            }
+        if (personagem.escudo != null) {
+            this.escudo.setText(personagem.escudo.nome);
+        }else{
+            this.escudo.setText("");
+        }
 
-            if (personagem.equipamentos.legs != null) {
-                this.perneiras.setText(personagem.equipamentos.legs.nome);
-            }else{
-                this.perneiras.setText("");
-            }
+        if (personagem.perneira != null) {
+            this.perneiras.setText(personagem.perneira.nome);
+        }else{
+            this.perneiras.setText("");
+        }
 
-            if (personagem.equipamentos.shoes != null) {
-                this.botas.setText(personagem.equipamentos.shoes.nome);
-            }else{
-                this.botas.setText("");
-            }
+        if (personagem.calcado != null) {
+            this.botas.setText(personagem.calcado.nome);
+        }else{
+            this.botas.setText("");
         }
 
         if(personagem.inventario.size() > 0){
