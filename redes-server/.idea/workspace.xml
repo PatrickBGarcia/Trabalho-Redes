@@ -57,60 +57,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TCPServer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/TCPServer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="61" selection-start-line="14" selection-start-column="61" selection-end-line="14" selection-end-column="61" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PersonagemTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/entities/PersonagemTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="60" column="35" selection-start-line="60" selection-start-column="35" selection-end-line="60" selection-end-column="35" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ProcessarRequisicao.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/ProcessarRequisicao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="141" column="91" lean-forward="true" selection-start-line="141" selection-start-column="91" selection-end-line="141" selection-end-column="91" />
-              <folding>
-                <element signature="e#428#429#0" expanded="true" />
-                <element signature="e#466#467#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SecondResponse.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/responses/SecondResponse.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+            <state relative-caret-position="1625">
+              <caret line="124" column="59" selection-start-line="124" selection-start-column="59" selection-end-line="124" selection-end-column="59" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PersonagemDAO.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/entities/DAO/PersonagemDAO.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="18" column="55" selection-start-line="18" selection-start-column="55" selection-end-line="18" selection-end-column="55" />
             </state>
           </provider>
         </entry>
@@ -154,11 +108,9 @@
         <option value="$PROJECT_DIR$/src/main/java/inimigos/Boss.java" />
         <option value="$PROJECT_DIR$/src/main/java/inimigos/Minichefe.java" />
         <option value="$PROJECT_DIR$/src/main/java/inimigos/Monstro.java" />
-        <option value="$PROJECT_DIR$/src/main/java/mapa/Sala.java" />
         <option value="$PROJECT_DIR$/src/main/java/itens/Item.java" />
         <option value="$PROJECT_DIR$/src/main/java/npcs/Comerciante.java" />
         <option value="$PROJECT_DIR$/src/test/java/entities/MonstroTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/TCPServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/itens/combate/Equipamento.java" />
         <option value="$PROJECT_DIR$/src/main/java/itens/combate/Set.java" />
         <option value="$PROJECT_DIR$/src/main/java/itens/combate/Armadura.java" />
@@ -173,6 +125,10 @@
         <option value="$PROJECT_DIR$/src/main/java/entities/DAO/PersonagemDAO.java" />
         <option value="$PROJECT_DIR$/src/test/java/entities/PersonagemTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/responses/SecondResponse.java" />
+        <option value="$PROJECT_DIR$/src/main/java/mapa/Mapa.java" />
+        <option value="$PROJECT_DIR$/src/main/java/mapa/Sala.java" />
+        <option value="$PROJECT_DIR$/src/test/java/mapa/MapaTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/TCPServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/ProcessarRequisicao.java" />
       </list>
     </option>
@@ -211,7 +167,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -236,23 +191,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="redes-server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="redes-server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="entities" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="redes-server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="redes-server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="entities" type="462c0819:PsiDirectoryNode" />
-              <item name="DAO" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="redes-server" type="b2602c69:ProjectViewProjectNode" />
@@ -289,23 +227,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="entities" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="redes-server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="redes-server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="requests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="redes-server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="redes-server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="responses" type="462c0819:PsiDirectoryNode" />
+              <item name="mapa" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="redes-server" type="b2602c69:ProjectViewProjectNode" />
@@ -316,6 +238,7 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -351,6 +274,29 @@
       <option name="MAIN_CLASS_NAME" value="TCPServer" />
       <module name="redes" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+    </configuration>
+    <configuration name="MapaTest.criaMapa" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="redes" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="mapa.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="mapa" />
+      <option name="MAIN_CLASS_NAME" value="mapa.MapaTest" />
+      <option name="METHOD_NAME" value="criaMapa" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
     </configuration>
     <configuration name="PersonagemTest.atualizaPersonagem" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="redes" />
@@ -444,29 +390,6 @@
       </option>
       <patterns />
     </configuration>
-    <configuration name="ResponseTest.testaSerializacaoPersonagem" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="redes" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="responses.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="responses" />
-      <option name="MAIN_CLASS_NAME" value="responses.ResponseTest" />
-      <option name="METHOD_NAME" value="testaSerializacaoPersonagem" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
-    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -513,19 +436,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.run" />
-      <item itemvalue="JUnit.ResponseTest.testaSerializacaoPersonagem" />
       <item itemvalue="JUnit.PersonagemTest.criarTabelaPersonagem" />
       <item itemvalue="JUnit.PersonagemTest.criarPersonagem" />
       <item itemvalue="JUnit.PersonagemTest.selecionaPersonagem" />
       <item itemvalue="JUnit.PersonagemTest.atualizaPersonagem" />
+      <item itemvalue="JUnit.MapaTest.criaMapa" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.MapaTest.criaMapa" />
         <item itemvalue="JUnit.PersonagemTest.atualizaPersonagem" />
         <item itemvalue="JUnit.PersonagemTest.selecionaPersonagem" />
         <item itemvalue="JUnit.PersonagemTest.criarPersonagem" />
         <item itemvalue="JUnit.PersonagemTest.criarTabelaPersonagem" />
-        <item itemvalue="JUnit.ResponseTest.testaSerializacaoPersonagem" />
       </list>
     </recent_temporary>
   </component>
@@ -565,16 +488,15 @@
       <workItem from="1544482212863" duration="1098000" />
       <workItem from="1544485229219" duration="1979000" />
       <workItem from="1544488020946" duration="278000" />
+      <workItem from="1544558378886" duration="591000" />
+      <workItem from="1544581695798" duration="670000" />
+      <workItem from="1544583451089" duration="7381000" />
+      <workItem from="1544592018705" duration="171000" />
+      <workItem from="1544592297253" duration="441000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="ResponseTest_testaSerializacaoPersonagem - 2018.12.10 at 21h 52m 44s.xml">
-      <configuration name="ResponseTest.testaSerializacaoPersonagem" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ResponseTest_testaSerializacaoPersonagem - 2018.12.10 at 22h 10m 57s.xml">
-      <configuration name="ResponseTest.testaSerializacaoPersonagem" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="PersonagemTest_criarTabelaPersonagem - 2018.12.11 at 00h 01m 01s.xml">
       <configuration name="PersonagemTest.criarTabelaPersonagem" configurationId="JUnit" />
     </history-entry>
@@ -599,18 +521,25 @@
     <history-entry file="PersonagemTest_atualizaPersonagem - 2018.12.11 at 02h 05m 59s.xml">
       <configuration name="PersonagemTest.atualizaPersonagem" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="MapaTest_criaMapa - 2018.12.12 at 03h 11m 49s.xml">
+      <configuration name="MapaTest.criaMapa" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MapaTest_criaMapa - 2018.12.12 at 03h 15m 46s.xml">
+      <configuration name="MapaTest.criaMapa" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48458000" />
+    <option name="totallyTimeSpent" value="57712000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.062091503" />
       <window_info anchor="right" id="Palette&#9;" order="4" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="right" id="Maven Projects" order="5" weight="0.21083455" />
+      <window_info anchor="right" id="Maven Projects" order="5" visible="true" weight="0.21083455" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3863275" />
@@ -622,36 +551,20 @@
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.38155803" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info id="Learn" order="2" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22986823" />
-      <window_info id="Favorites" order="4" side_tool="true" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" id="Maven" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="7" />
-      <window_info anchor="right" id="Palette&#9;" order="4" />
-      <window_info anchor="right" id="Maven Projects" order="5" visible="true" weight="0.21083455" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.38155803" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24963397" />
-      <window_info id="Image Layers" order="5" />
-      <window_info anchor="right" id="Theme Preview" order="9" />
-      <window_info id="Capture Tool" order="7" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info anchor="right" id="Capture Analysis" order="8" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info id="UI Designer" order="6" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32750398" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3863275" />
-      <window_info anchor="bottom" id="Messages" order="11" weight="0.062091503" />
+      <window_info id="Capture Tool" order="7" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info id="Designer" order="3" />
+      <window_info id="Image Layers" order="5" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="right" id="Maven" order="6" />
+      <window_info anchor="right" id="Theme Preview" order="9" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24963397" />
+      <window_info anchor="right" id="Palette" order="7" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32750398" />
+      <window_info anchor="right" id="Capture Analysis" order="8" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" id="Maven" order="0" />
@@ -703,13 +616,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ProcessarRequisicao.java</url>
-          <line>83</line>
+          <line>87</line>
           <properties />
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ProcessarRequisicao.java</url>
-          <line>109</line>
+          <line>121</line>
           <properties />
           <option name="timeStamp" value="8" />
         </line-breakpoint>
@@ -727,7 +640,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ProcessarRequisicao.java</url>
-          <line>79</line>
+          <line>83</line>
           <properties />
           <option name="timeStamp" value="21" />
         </line-breakpoint>
@@ -738,29 +651,27 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ProcessarRequisicao.java</url>
-          <line>177</line>
+          <line>240</line>
           <properties />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ProcessarRequisicao.java</url>
-          <line>165</line>
+          <line>226</line>
           <properties />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/mapa/Sala.java</url>
+          <line>26</line>
+          <properties />
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="3" />
+      <option name="time" value="5" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/itens/combate/Capacete.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/itens/combate/Equipamento.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/itens/combate/Set.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/entities/MysqlConnection.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -773,10 +684,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="952">
           <caret line="68" selection-start-line="68" selection-end-line="68" />
-          <folding>
-            <element signature="e#428#429#0" expanded="true" />
-            <element signature="e#466#467#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -849,13 +756,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
           <caret line="30" column="56" selection-start-line="30" selection-start-column="56" selection-end-line="30" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/mapa/Sala.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -977,52 +877,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="731">
           <caret line="49" column="58" selection-start-line="11" selection-end-line="13" selection-end-column="5" />
-          <folding>
-            <element signature="e#4238#4239#0" expanded="true" />
-            <element signature="e#4272#4273#0" expanded="true" />
-            <element signature="e#4314#4315#0" expanded="true" />
-            <element signature="e#4348#4349#0" expanded="true" />
-            <element signature="e#4379#4380#0" expanded="true" />
-            <element signature="e#4406#4407#0" expanded="true" />
-            <element signature="e#4446#4447#0" expanded="true" />
-            <element signature="e#4478#4479#0" expanded="true" />
-            <element signature="e#4507#4508#0" expanded="true" />
-            <element signature="e#4535#4536#0" expanded="true" />
-            <element signature="e#4574#4575#0" expanded="true" />
-            <element signature="e#4608#4609#0" expanded="true" />
-            <element signature="e#4636#4637#0" expanded="true" />
-            <element signature="e#4663#4664#0" expanded="true" />
-            <element signature="e#4700#4701#0" expanded="true" />
-            <element signature="e#4732#4733#0" expanded="true" />
-            <element signature="e#4759#4760#0" expanded="true" />
-            <element signature="e#4785#4786#0" expanded="true" />
-            <element signature="e#4820#4821#0" expanded="true" />
-            <element signature="e#4850#4851#0" expanded="true" />
-            <element signature="e#4886#4887#0" expanded="true" />
-            <element signature="e#4921#4922#0" expanded="true" />
-            <element signature="e#4974#4975#0" expanded="true" />
-            <element signature="e#5022#5023#0" expanded="true" />
-            <element signature="e#5051#5052#0" expanded="true" />
-            <element signature="e#5079#5080#0" expanded="true" />
-            <element signature="e#5118#5119#0" expanded="true" />
-            <element signature="e#5152#5153#0" expanded="true" />
-            <element signature="e#5185#5186#0" expanded="true" />
-            <element signature="e#5217#5218#0" expanded="true" />
-            <element signature="e#5264#5265#0" expanded="true" />
-            <element signature="e#5306#5307#0" expanded="true" />
-            <element signature="e#5337#5338#0" expanded="true" />
-            <element signature="e#5367#5368#0" expanded="true" />
-            <element signature="e#5410#5411#0" expanded="true" />
-            <element signature="e#5448#5449#0" expanded="true" />
-            <element signature="e#5478#5479#0" expanded="true" />
-            <element signature="e#5507#5508#0" expanded="true" />
-            <element signature="e#5548#5549#0" expanded="true" />
-            <element signature="e#5584#5585#0" expanded="true" />
-            <element signature="e#5612#5613#0" expanded="true" />
-            <element signature="e#5639#5640#0" expanded="true" />
-            <element signature="e#5676#5677#0" expanded="true" />
-            <element signature="e#5708#5709#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1047,10 +901,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/TCPServer.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/entities/DAO/PersonagemDAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="61" selection-start-line="14" selection-start-column="61" selection-end-line="14" selection-end-column="61" />
+        <state relative-caret-position="187">
+          <caret line="18" column="55" selection-start-line="18" selection-start-column="55" selection-end-line="18" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/responses/AdditionalResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1059,7 +920,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/entities/PersonagemTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
+        <state relative-caret-position="304">
           <caret line="60" column="35" selection-start-line="60" selection-start-column="35" selection-end-line="60" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1067,17 +928,55 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/entities/DAO/PersonagemDAO.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/mapa/Sala.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="18" column="55" selection-start-line="18" selection-start-column="55" selection-end-line="18" selection-end-column="55" />
+        <state relative-caret-position="80">
+          <caret line="16" column="64" selection-start-line="16" selection-start-column="64" selection-end-line="16" selection-end-column="64" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1003#1004#0" expanded="true" />
+            <element signature="e#1045#1046#0" expanded="true" />
+            <element signature="e#1094#1095#0" expanded="true" />
+            <element signature="e#1139#1140#0" expanded="true" />
+            <element signature="e#1165#1166#0" expanded="true" />
+            <element signature="e#1190#1191#0" expanded="true" />
+            <element signature="e#1223#1224#0" expanded="true" />
+            <element signature="e#1251#1252#0" expanded="true" />
+            <element signature="e#1282#1283#0" expanded="true" />
+            <element signature="e#1309#1310#0" expanded="true" />
+            <element signature="e#1359#1360#0" expanded="true" />
+            <element signature="e#1393#1394#0" expanded="true" />
+            <element signature="e#1459#1460#0" expanded="true" />
+            <element signature="e#1505#1506#0" expanded="true" />
+            <element signature="e#1552#1553#0" expanded="true" />
+            <element signature="e#1583#1584#0" expanded="true" />
+            <element signature="e#1643#1644#0" expanded="true" />
+            <element signature="e#1683#1684#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/responses/SecondResponse.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/mapa/Mapa.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+        <state relative-caret-position="255">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/mapa/MapaTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="11" column="35" lean-forward="true" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/TCPServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="19" column="9" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1086,11 +985,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ProcessarRequisicao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="141" column="91" lean-forward="true" selection-start-line="141" selection-start-column="91" selection-end-line="141" selection-end-column="91" />
+        <state relative-caret-position="1625">
+          <caret line="124" column="59" selection-start-line="124" selection-start-column="59" selection-end-line="124" selection-end-column="59" />
           <folding>
-            <element signature="e#428#429#0" expanded="true" />
-            <element signature="e#466#467#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

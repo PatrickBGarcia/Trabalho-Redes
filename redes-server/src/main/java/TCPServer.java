@@ -1,3 +1,5 @@
+import mapa.Sala;
+
 import java.net.ServerSocket;
 import java.net.Socket;
 

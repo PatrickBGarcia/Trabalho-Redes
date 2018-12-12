@@ -6,9 +6,9 @@ import itens.combate.*;
 import itens.consumivel.Pot;
 import personagem.Personagem;
 import requests.Requisicao;
+import responses.AdditionalResponse;
 import responses.Response;
 import responses.ResponseTypes;
-import responses.SecondResponse;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -60,6 +60,8 @@ public class ProcessarRequisicao implements Runnable{
             requisicao.acao = requisicao.acao.toLowerCase();
 
             Response response = new Response();
+            AdditionalResponse adResponse = new AdditionalResponse();
+            PersonagemDAO personagemDAO = null;
             String resposta;
 
             try {
@@ -69,7 +71,7 @@ public class ProcessarRequisicao implements Runnable{
                             resposta = response.createResponse(ResponseTypes.SENHAS_DIFERENTES);
                         } else {
                             mysqlConnection.openConnection();
-                            PersonagemDAO personagemDAO = new PersonagemDAO(mysqlConnection.connectionSource);
+                            personagemDAO = new PersonagemDAO(mysqlConnection.connectionSource);
                             if(personagemDAO.usuarioExiste(requisicao.argumentos[0])){
                                 resposta = response.createResponse(ResponseTypes.USUARIO_JA_EXISTE);
                             }else{
@@ -77,7 +79,9 @@ public class ProcessarRequisicao implements Runnable{
                                 outToClient.writeBytes(resposta);
                                 personagem = new Personagem(requisicao.argumentos[0],requisicao.argumentos[1]);
                                 personagemDAO.create(personagem);
-                                resposta = new Gson().toJson(personagem) + "\n";
+                                adResponse.personagem = personagem;
+                                adResponse.mensagemAdicional = "Parabens pelo registro " + requisicao.argumentos[0] + "! Aproveite!!\n";
+                                resposta = new Gson().toJson(adResponse) + "\n";
                             }
                             mysqlConnection.closeConnection();
                         }
@@ -86,7 +90,7 @@ public class ProcessarRequisicao implements Runnable{
 
                     case "login":
                         mysqlConnection.openConnection();
-                        PersonagemDAO personagemDAO = new PersonagemDAO(mysqlConnection.connectionSource);
+                        personagemDAO = new PersonagemDAO(mysqlConnection.connectionSource);
                         if(personagemDAO.usuarioExiste(requisicao.argumentos[0])){
                             personagem = personagemDAO.queryForEq("nome", requisicao.argumentos[0]).get(0);
                             if(!(personagem.getSenha().equals(requisicao.argumentos[1]))){
@@ -94,7 +98,9 @@ public class ProcessarRequisicao implements Runnable{
                             }else{
                                 resposta = response.createResponse(ResponseTypes.SUCESSO);
                                 outToClient.writeBytes(resposta);
-                                resposta = new Gson().toJson(personagem) + "\n";
+                                adResponse.personagem = personagem;
+                                adResponse.mensagemAdicional = "Logado como: " + personagem.getNome() + "\n";
+                                resposta = new Gson().toJson(adResponse) + "\n";
                             }
                         }else{
                             resposta = response.createResponse(ResponseTypes.USUARIO_NAO_EXISTE);
@@ -103,6 +109,12 @@ public class ProcessarRequisicao implements Runnable{
                         outToClient.writeBytes(resposta);
                         break;
                     case "logoff":
+                        resposta = response.createResponse(ResponseTypes.SUCESSO);
+                        outToClient.writeBytes(resposta);
+                        adResponse.personagem = personagem;
+                        adResponse.mensagemAdicional = "Conexao encerrada, ate mais!\n";
+                        resposta = new Gson().toJson(adResponse) + "\n";
+                        outToClient.writeBytes(resposta);
                         this.cliente.close();
                         this.cliente = null;
                         break;
@@ -143,17 +155,66 @@ public class ProcessarRequisicao implements Runnable{
                         } else {
                             resposta = response.createResponse(ResponseTypes.SUCESSO);
                             outToClient.writeBytes(resposta);
-                            SecondResponse sr = new SecondResponse();
 
+                            adResponse.personagem = personagem;
                             if ("inventario".equals(requisicao.argumentos[0])) {
-
+                                if(personagem.inventario.size() > 0){
+                                    adResponse.mensagemAdicional = personagem.getNome() + " você possui os seguintes itens:\n";
+                                    for(Item item: personagem.inventario){
+                                        adResponse.mensagemAdicional += item.getNome() + "\n";
+                                    }
+                                }else{
+                                    adResponse.mensagemAdicional = personagem.getNome() + ", infelizmente você não possui nenhum item :(\n";
+                                }
                             } else if ("equipamentos".equals(requisicao.argumentos[0])) {
-
+                                if(personagem.getCapacete() != null) {
+                                    adResponse.mensagemAdicional += "Cabeca: " + personagem.getCapacete().getNome() +
+                                            " - " + personagem.getCapacete().getDano() + "/" + personagem.getCapacete().getDefesa() + "\n";
+                                }else{
+                                    adResponse.mensagemAdicional += "Cabeca: Nenhum\n";
+                                }
+                                if(personagem.getCapacete() != null) {
+                                    adResponse.mensagemAdicional += "Armadura: " + personagem.getArmadura().getNome() +
+                                            " - " + personagem.getArmadura().getDano() + "/" + personagem.getArmadura().getDefesa() + "\n";
+                                }else{
+                                    adResponse.mensagemAdicional += "Armadura: Nenhum\n";
+                                }
+                                if(personagem.getCapacete() != null) {
+                                    adResponse.mensagemAdicional += "Espada: " + personagem.getEspada().getNome() +
+                                            " - " + personagem.getEspada().getDano() + "/" + personagem.getEspada().getDefesa() + "\n";
+                                }else{
+                                    adResponse.mensagemAdicional += "Espada: Nenhum\n";
+                                }
+                                if(personagem.getCapacete() != null) {
+                                    adResponse.mensagemAdicional += "Escudo: " + personagem.getEscudo().getNome() +
+                                            " - " + personagem.getEscudo().getDano() + "/" + personagem.getEscudo().getDefesa() + "\n";
+                                }else{
+                                    adResponse.mensagemAdicional += "Escudo: Nenhum\n";
+                                }
+                                if(personagem.getCapacete() != null) {
+                                    adResponse.mensagemAdicional += "Perneira: " + personagem.getPerneira().getNome() +
+                                            " - " + personagem.getPerneira().getDano() + "/" + personagem.getPerneira().getDefesa() + "\n";
+                                }else{
+                                    adResponse.mensagemAdicional += "Perneira: Nenhum\n";
+                                }
+                                if(personagem.getCapacete() != null) {
+                                    adResponse.mensagemAdicional += "Calcado: " + personagem.getCalcado().getNome() +
+                                            " - " + personagem.getCalcado().getDano() + "/" + personagem.getCalcado().getDefesa() + "\n";
+                                }else{
+                                    adResponse.mensagemAdicional += "Calcado: Nenhum\n";
+                                }
                             } else if ("vida".equals(requisicao.argumentos[0])) {
-
+                                adResponse.mensagemAdicional = "Voce possui " + personagem.getVidaAtual() + "/" + personagem.getVidaMax() + " de vida.\n";
                             } else {
-                                //sr.mensagemAdicional = "Você possui %s de força";
+                                adResponse.mensagemAdicional = "Você possui:\n";
+                                adResponse.mensagemAdicional += "Nivel: " + personagem.getNivel() + "\n";
+                                adResponse.mensagemAdicional += personagem.getForca() + " de forca\n";
+                                adResponse.mensagemAdicional += personagem.getDano() + " de dano\n";
+                                adResponse.mensagemAdicional += personagem.getDefesa() + " de defesa\n";
+                                adResponse.mensagemAdicional += personagem.getExp() + "/" + personagem.getExpProxLevel() + " de exp\n";
+                                adResponse.mensagemAdicional += personagem.getOuro() + " de ouro\n";
                             }
+                            resposta = new Gson().toJson(adResponse) + "\n";
                         }
                         outToClient.writeBytes(resposta);
                         break;
@@ -175,7 +236,10 @@ public class ProcessarRequisicao implements Runnable{
                                 resposta = response.createResponse(ResponseTypes.SUCESSO);
                                 outToClient.writeBytes(resposta);
                                 Item item = personagem.inventario.get(i);
+                                personagem.inventario.remove(i);
+
                                 if(item.categoria.equals(Item.Categoria.EQUIPAMENTO)){
+                                    adResponse.mensagemAdicional = "Colocando " + item.getNome() + "\n";
                                     if(item.getClass().equals(Capacete.class)){
                                         if(personagem.getCapacete() != null){
                                             personagem.inventario.add(personagem.getCapacete());
@@ -209,12 +273,19 @@ public class ProcessarRequisicao implements Runnable{
                                     }
                                     personagem.recalculaDano();
                                     personagem.recalculaDefesa();
+                                    adResponse.mensagemAdicional += "Agora voce possui " + personagem.getDano() +
+                                            " de dano e " + personagem.getDefesa() + " de defesa\n";
                                 }else{
+                                    adResponse.mensagemAdicional = "Usando " + item.getNome() + "\n";
                                     personagem.usarPocao((Pot) item);
-                                    personagem.inventario.remove(i);
+                                    adResponse.mensagemAdicional += "Agora voce possui " + personagem.getVidaAtual() + "/" + personagem.getVidaMax() +" de vida\n";
                                 }
-                                //personagemDAO.update(personagem);
-                                resposta = new Gson().toJson(personagem) + "\n";
+                                mysqlConnection.openConnection();
+                                personagemDAO = new PersonagemDAO(mysqlConnection.connectionSource);
+                                personagemDAO.update(personagem);
+                                mysqlConnection.closeConnection();
+                                adResponse.personagem = personagem;
+                                resposta = new Gson().toJson(adResponse) + "\n";
                             }
                         }
                         outToClient.writeBytes(resposta);

@@ -3,7 +3,7 @@ package responses;
 import com.google.gson.Gson;
 import personagem.Personagem;
 
-public class SecondResponse {
+public class AdditionalResponse {
     public Personagem personagem;
     public String mensagemAdicional;
 

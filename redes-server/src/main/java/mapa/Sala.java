@@ -5,6 +5,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import inimigos.Monstro;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 @DatabaseTable(tableName = "sala")
@@ -13,7 +14,7 @@ public class Sala {
     private int id;
     @DatabaseField(canBeNull = false)
     private final String nome;
-    public Map<Direcao, Sala> salaAoRedor;
+    public HashMap<Direcao, Sala> salaAoRedor = new HashMap<>();
     public ArrayList<Monstro> monstros = new ArrayList<>();
 
 
@@ -22,7 +23,11 @@ public class Sala {
     }
 
     public void addAdjacente(Sala sala, Direcao direcao) {
-        if(salaAoRedor.get(direcao) == null) {
+        if(salaAoRedor != null) {
+            if (salaAoRedor.get(direcao) == null) {
+                salaAoRedor.put(direcao, sala);
+            }
+        }else{
             salaAoRedor.put(direcao, sala);
         }
     }
@@ -58,7 +63,7 @@ public class Sala {
         return salaAoRedor;
     }
 
-    public void setSalaAoRedor(Map<Direcao, Sala> salaAoRedor) {
+    public void setSalaAoRedor(HashMap<Direcao, Sala> salaAoRedor) {
         this.salaAoRedor = salaAoRedor;
     }
 

@@ -1,5 +1,7 @@
 import com.google.gson.Gson;
 import itens.Item;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,6 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import personagem.Personagem;
 import requests.Requisicao;
+import responses.AdditionalResponse;
 import responses.Response;
 
 import java.io.BufferedReader;
@@ -85,6 +88,15 @@ public class ClientController implements Initializable {
             }
         });
 
+        txtHistorico.textProperty().addListener(new ChangeListener<Object>() {
+            @Override
+            public void changed(ObservableValue<?> observable, Object oldValue,
+                                Object newValue) {
+                txtHistorico.setScrollTop(Double.MAX_VALUE); //this will scroll to the bottom
+                //use Double.MIN_VALUE to scroll to the top
+            }
+        });
+
         txtHistorico.appendText(
                 "Bem vindx ao Anglo RPG!!\n" +
                 "Para começar, registre-se ou faça login.\n" +
@@ -132,15 +144,15 @@ public class ClientController implements Initializable {
             return response;
         }
 
-        String personagem;
+        String respostaAdicional;
         try {
-            personagem = inFromServer.readLine();
+            respostaAdicional = inFromServer.readLine();
         } catch (IOException e) {
             this.txtHistorico.appendText("PROBLEMAS PARA LER ALTERAÇÕES NO PERSONAGEM\n");
             return response;
         }
 
-        response.personagem = new Gson().fromJson(personagem, Personagem.class);
+        response.adicional = new Gson().fromJson(respostaAdicional, AdditionalResponse.class);
         return response;
     }
 
@@ -213,16 +225,6 @@ public class ClientController implements Initializable {
                 requisicao.argumentos[1] = parsedText[2];
                 requisicao.argumentos[2] = parsedText[3];
 
-                response = sendContent(gson.toJson(requisicao));
-                if(response == null){
-                    return;
-                }
-                if(response.codigo != 1){
-                    this.txtHistorico.appendText(response.descricao + "\n");
-                    return;
-                }
-
-                atualizaPersonagem(response.personagem);
                 break;
             case "login":
                 if (parsedText.length != 3){
@@ -257,15 +259,6 @@ public class ClientController implements Initializable {
                 requisicao.argumentos[0] = parsedText[1];
                 requisicao.argumentos[1] = parsedText[2];
 
-                response = sendContent(gson.toJson(requisicao));
-                if(response == null){
-                    return;
-                }
-                if(response.codigo != 1){
-                    this.txtHistorico.appendText(response.descricao + "\n");
-                    return;
-                }
-                atualizaPersonagem(response.personagem);
                 break;
             case "logoff":
                 if (parsedText.length != 1){
@@ -283,8 +276,10 @@ public class ClientController implements Initializable {
                     this.txtHistorico.appendText(response.descricao + "\n");
                     return;
                 }
-                atualizaPersonagem(response.personagem);
-                break;
+
+                this.txtHistorico.appendText(response.adicional.mensagemAdicional);
+                limpaPersonagem();
+                return;
             case "mover":
                 if (parsedText.length != 2){
                     this.txtHistorico.appendText("Quantidade de parâmetros inválida, devem ser 2\n" +
@@ -296,15 +291,6 @@ public class ClientController implements Initializable {
                 requisicao.argumentos = new String[1];
                 requisicao.argumentos[0] = parsedText[1];
 
-                response = sendContent(gson.toJson(requisicao));
-                if(response == null){
-                    return;
-                }
-                if(response.codigo != 1){
-                    this.txtHistorico.appendText(response.descricao + "\n");
-                    return;
-                }
-                atualizaPersonagem(response.personagem);
                 break;
             case "atacar":
                 if (parsedText.length != 2){
@@ -317,15 +303,6 @@ public class ClientController implements Initializable {
                 requisicao.argumentos = new String[1];
                 requisicao.argumentos[0] = parsedText[1];
 
-                response = sendContent(gson.toJson(requisicao));
-                if(response == null){
-                    return;
-                }
-                if(response.codigo != 1){
-                    this.txtHistorico.appendText(response.descricao + "\n");
-                    return;
-                }
-                atualizaPersonagem(response.personagem);
                 break;
             case "ver":
                 if (parsedText.length != 2){
@@ -338,16 +315,6 @@ public class ClientController implements Initializable {
                 requisicao.argumentos = new String[1];
                 requisicao.argumentos[0] = parsedText[1];
 
-                response = sendContent(gson.toJson(requisicao));
-                if(response == null){
-                    return;
-                }
-                if(response.codigo != 1){
-                    this.txtHistorico.appendText(response.descricao + "\n");
-                    return;
-                }
-
-                atualizaPersonagem(response.personagem);
                 break;
             case "usar":
                 if (parsedText.length != 2){
@@ -360,16 +327,6 @@ public class ClientController implements Initializable {
                 requisicao.argumentos = new String[1];
                 requisicao.argumentos[0] = parsedText[1];
 
-                response = sendContent(gson.toJson(requisicao));
-                if(response == null){
-                    return;
-                }
-                if(response.codigo != 1){
-                    this.txtHistorico.appendText(response.descricao + "\n");
-                    return;
-                }
-
-                atualizaPersonagem(response.personagem);
                 break;
             case "conversar":
                 if (parsedText.length != 2){
@@ -382,16 +339,6 @@ public class ClientController implements Initializable {
                 requisicao.argumentos = new String[1];
                 requisicao.argumentos[0] = parsedText[1];
 
-                response = sendContent(gson.toJson(requisicao));
-                if(response == null){
-                    return;
-                }
-                if(response.codigo != 1){
-                    this.txtHistorico.appendText(response.descricao + "\n");
-                    return;
-                }
-
-                atualizaPersonagem(response.personagem);
                 break;
             case "sair":
                 if (parsedText.length != 1){
@@ -402,16 +349,6 @@ public class ClientController implements Initializable {
 
                 requisicao.acao = parsedText[0];
 
-                response = sendContent(gson.toJson(requisicao));
-                if(response == null){
-                    return;
-                }
-                if(response.codigo != 1){
-                    this.txtHistorico.appendText(response.descricao + "\n");
-                    return;
-                }
-
-                atualizaPersonagem(response.personagem);
                 break;
             case "vender":
                 if (parsedText.length != 3){
@@ -425,16 +362,6 @@ public class ClientController implements Initializable {
                 requisicao.argumentos[0] = parsedText[1];
                 requisicao.argumentos[1] = parsedText[2];
 
-                response = sendContent(gson.toJson(requisicao));
-                if(response == null){
-                    return;
-                }
-                if(response.codigo != 1){
-                    this.txtHistorico.appendText(response.descricao + "\n");
-                    return;
-                }
-
-                atualizaPersonagem(response.personagem);
                 break;
             case "comprar":
                 if (parsedText.length != 3){
@@ -448,21 +375,22 @@ public class ClientController implements Initializable {
                 requisicao.argumentos[0] = parsedText[1];
                 requisicao.argumentos[1] = parsedText[2];
 
-                response = sendContent(gson.toJson(requisicao));
-                if(response == null){
-                    return;
-                }
-                if(response.codigo != 1){
-                    this.txtHistorico.appendText(response.descricao + "\n");
-                    return;
-                }
-
-                atualizaPersonagem(response.personagem);
                 break;
             default:
                 this.txtHistorico.appendText("Comando não reconhecido\nPara a lista completa de comandos, utilize \\help\n");
-                break;
+                return;
         }
+        response = sendContent(gson.toJson(requisicao));
+        if(response == null){
+            return;
+        }
+        if(response.codigo != 1){
+            this.txtHistorico.appendText(response.descricao + "\n");
+            return;
+        }
+
+        this.txtHistorico.appendText(response.adicional.mensagemAdicional);
+        atualizaPersonagem(response.adicional.personagem);
     }
 
     private void showHelp(){
