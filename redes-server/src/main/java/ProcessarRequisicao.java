@@ -290,15 +290,30 @@ public class ProcessarRequisicao implements Runnable{
                                     resposta = response.createResponse(ResponseTypes.ATACAR_INVALIDO);
                                 }else{
                                     if("pulla".equals(requisicao.argumentos[0])){
-                                        Boss pulla = (Boss) salaAtual.getMonstros().get(index);
+                                        Monstro pulla = salaAtual.getMonstros().get(index);
                                         if(pulla.getVidaAtual() <= 0){
                                             resposta = response.createResponse(ResponseTypes.COMANDO_INVALIDO);
                                         }else{
                                             resposta = response.createResponse(ResponseTypes.SUCESSO);
                                             outToClient.writeBytes(resposta);
                                             adResponse.mensagemAdicional = "Atacando pulla\n";
+                                            int danoCausado = personagem.getDano() - pulla.getDefesa();
+                                            if (danoCausado > 0) {
+                                                pulla.setVidaAtual(pulla.getVidaAtual() - danoCausado);
+                                                adResponse.mensagemAdicional += "Voce atacou e infringiu " + danoCausado + " de dano ao pulla\n";
+                                            } else {
+                                                adResponse.mensagemAdicional += "Voce nao conseguiu causar dano ao pulla!\n";
+                                            }
 
-
+                                            if (pulla.getVidaAtual() > 0) {
+                                                adResponse.mensagemAdicional += "pulla ainda possui " + pulla.getVidaAtual() + " de vida!\n";
+                                            }else{
+                                                adResponse.mensagemAdicional += "PARABENS, VOCE DERROTOU O PULLA";
+                                                personagem.aumentaExp(5000);
+                                                personagem.aumentarOuro(5000);
+                                            }
+                                            adResponse.personagem = personagem;
+                                            resposta = new Gson().toJson(adResponse) + "\n";
                                         }
                                     }else {
                                         Monstro inimigo = salaAtual.monstros.get(index);
