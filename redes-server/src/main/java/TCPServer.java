@@ -1,3 +1,4 @@
+import com.j256.ormlite.logger.LocalLog;
 import mapa.Mapa;
 import mapa.Sala;
 
@@ -7,6 +8,7 @@ import java.net.Socket;
 public class TCPServer {
 
 	public static void main(String[] args) throws Exception{
+        System.setProperty(LocalLog.LOCAL_LOG_LEVEL_PROPERTY, "ERROR");
 	    Sala salaInicial = Mapa.iniciar();
 
 	    if(salaInicial == null){

@@ -54,6 +54,30 @@ public class Sala {
         return null;
     }
 
+    public String verSalasAoRedor(){
+        String salas = "";
+        if(this.salaAoRedor.containsKey(Direcao.NORTE)){
+            salas += "NORTE - " + this.salaAoRedor.get(Direcao.NORTE).getNome() + "\n";
+        }
+        if(this.salaAoRedor.containsKey(Direcao.SUL)){
+            salas += "SUL - " + this.salaAoRedor.get(Direcao.SUL).getNome() + "\n";
+        }
+        if(this.salaAoRedor.containsKey(Direcao.LESTE)){
+            salas += "LESTE - " + this.salaAoRedor.get(Direcao.LESTE).getNome() + "\n";
+        }
+        if(this.salaAoRedor.containsKey(Direcao.OESTE)){
+            salas += "OESTE - " + this.salaAoRedor.get(Direcao.OESTE).getNome() + "\n";
+        }
+        if(this.salaAoRedor.containsKey(Direcao.A_CIMA)){
+            salas += "ACIMA - " + this.salaAoRedor.get(Direcao.A_CIMA).getNome() + "\n";
+        }
+        if(this.salaAoRedor.containsKey(Direcao.ABAIXO)){
+            salas += "ABAIXO - " + this.salaAoRedor.get(Direcao.ABAIXO).getNome() + "\n";
+        }
+
+        return salas;
+    }
+
     public void addMonstro(Monstro monstro){
         this.monstros.add(monstro);
     }

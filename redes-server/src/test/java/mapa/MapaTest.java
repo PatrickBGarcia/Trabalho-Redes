@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 public class MapaTest {
@@ -41,4 +42,10 @@ public class MapaTest {
         }
     }
 
+    @Test
+    public void verMapasAoRedor(){
+        Sala inicial = Mapa.iniciar();
+
+        System.out.println(inicial.verSalasAoRedor());
+    }
 }

@@ -2,6 +2,7 @@ import com.google.gson.Gson;
 import entities.DAO.ItemDAO;
 import entities.DAO.PersonagemDAO;
 import entities.MysqlConnection;
+import inimigos.Boss;
 import inimigos.Monstro;
 import itens.Item;
 import itens.combate.*;
@@ -82,7 +83,7 @@ public class ProcessarRequisicao implements Runnable{
                             resposta = response.createResponse(ResponseTypes.SUCESSO);
                             outToClient.writeBytes(resposta);
                             adResponse.personagem = personagem;
-                            adResponse.mensagemAdicional = "Volte sempre!";
+                            adResponse.mensagemAdicional = "Volte sempre!\n";
                             resposta = new Gson().toJson(adResponse) + "\n";
                             outToClient.writeBytes(resposta);
                             break;
@@ -169,8 +170,6 @@ public class ProcessarRequisicao implements Runnable{
                         default:
                             resposta = response.createResponse(ResponseTypes.COMANDO_INVALIDO);
                             outToClient.writeBytes(resposta);
-                            resposta = new Gson().toJson(personagem) + "\n";
-                            outToClient.writeBytes(resposta);
                             break;
                     }
                 }else {
@@ -190,6 +189,17 @@ public class ProcessarRequisicao implements Runnable{
                                     personagemDAO.create(personagem);
                                     adResponse.personagem = personagem;
                                     adResponse.mensagemAdicional = "Parabens pelo registro " + requisicao.argumentos[0] + "! Aproveite!!\n";
+
+                                    adResponse.mensagemAdicional += "Voce esta em " + salaAtual.getNome() + "\n";
+                                    adResponse.mensagemAdicional += "Ao redor existem as seguintes salas:\n" + salaAtual.verSalasAoRedor();
+
+                                    if (salaAtual.monstros.size() > 0) {
+                                        adResponse.mensagemAdicional += "Nesta sala existem os seguintes monstros:\n";
+                                        for(Monstro monstro: salaAtual.monstros){
+                                            adResponse.mensagemAdicional += monstro.getNome() + " - Level " + monstro.getNivel() + "\n";
+                                        }
+                                    }
+
                                     resposta = new Gson().toJson(adResponse) + "\n";
                                 }
                                 mysqlConnection.closeConnection();
@@ -209,6 +219,16 @@ public class ProcessarRequisicao implements Runnable{
                                     outToClient.writeBytes(resposta);
                                     adResponse.personagem = personagem;
                                     adResponse.mensagemAdicional = "Logado como: " + personagem.getNome() + "\n";
+                                    adResponse.mensagemAdicional += "Voce esta em " + salaAtual.getNome() + "\n";
+                                    adResponse.mensagemAdicional += "Ao redor existem as seguintes salas:\n" + salaAtual.verSalasAoRedor();
+
+                                    if (salaAtual.monstros.size() > 0) {
+                                        adResponse.mensagemAdicional += "Nesta sala existem os seguintes monstros:\n";
+                                        for(Monstro monstro: salaAtual.monstros){
+                                            adResponse.mensagemAdicional += monstro.getNome() + " - Level " + monstro.getNivel() + "\n";
+                                        }
+                                    }
+
                                     resposta = new Gson().toJson(adResponse) + "\n";
                                 }
                             } else {
@@ -238,6 +258,7 @@ public class ProcessarRequisicao implements Runnable{
                                 outToClient.writeBytes(resposta);
                                 adResponse.personagem = personagem;
                                 adResponse.mensagemAdicional = "Voce esta em " + salaAtual.getNome() + "\n";
+                                adResponse.mensagemAdicional += "Ao redor existem as seguintes salas:\n" + salaAtual.verSalasAoRedor();
 
                                 if (salaAtual.monstros.size() > 0) {
                                     adResponse.mensagemAdicional += "Nesta sala existem os seguintes monstros:\n";
@@ -268,57 +289,70 @@ public class ProcessarRequisicao implements Runnable{
                                 if(!(existeMonstro)){
                                     resposta = response.createResponse(ResponseTypes.ATACAR_INVALIDO);
                                 }else{
-                                    Monstro inimigo = salaAtual.monstros.get(index);
-                                    inimigo.setVidaAtual(inimigo.getVidaMax());
-                                    resposta = response.createResponse(ResponseTypes.SUCESSO);
-                                    outToClient.writeBytes(resposta);
-
-                                    adResponse.mensagemAdicional = "Comecando batalha...\n";
-                                    while(inimigo.getVidaAtual() > 0 && personagem.getVidaAtual() > 0){
-                                        int danoCausado = personagem.getDano() - inimigo.getDefesa();
-                                        if(danoCausado > 0){
-                                            inimigo.setVidaAtual(inimigo.getVidaAtual()-danoCausado);
-                                            adResponse.mensagemAdicional += "Voce atacou e infringiu " + danoCausado + " de dano\n";
+                                    if("pulla".equals(requisicao.argumentos[0])){
+                                        Boss pulla = (Boss) salaAtual.getMonstros().get(index);
+                                        if(pulla.getVidaAtual() <= 0){
+                                            resposta = response.createResponse(ResponseTypes.COMANDO_INVALIDO);
                                         }else{
-                                            adResponse.mensagemAdicional += "Voce nao conseguiu causar dano ao inimigo!\n";
+                                            resposta = response.createResponse(ResponseTypes.SUCESSO);
+                                            outToClient.writeBytes(resposta);
+                                            adResponse.mensagemAdicional = "Atacando pulla\n";
+
+
                                         }
+                                    }else {
+                                        Monstro inimigo = salaAtual.monstros.get(index);
+                                        inimigo.setVidaAtual(inimigo.getVidaMax());
+                                        resposta = response.createResponse(ResponseTypes.SUCESSO);
+                                        outToClient.writeBytes(resposta);
 
-                                        if(inimigo.getVidaAtual() > 0){
-                                            int danoRecebido = inimigo.getDano() - personagem.getDefesa();
-                                            if(danoRecebido > 0){
-                                                personagem.setVidaAtual(personagem.getVidaAtual()-danoRecebido);
-                                                adResponse.mensagemAdicional += "Voce sofreu um ataque e perdeu " + danoRecebido + " de vida\n";
-                                            }else{
-                                                adResponse.mensagemAdicional += "Voce nao recebeu dano do inimigo!\n";
+                                        adResponse.mensagemAdicional = "Comecando batalha...\n";
+                                        while (inimigo.getVidaAtual() > 0 && personagem.getVidaAtual() > 0) {
+                                            int danoCausado = personagem.getDano() - inimigo.getDefesa();
+                                            if (danoCausado > 0) {
+                                                inimigo.setVidaAtual(inimigo.getVidaAtual() - danoCausado);
+                                                adResponse.mensagemAdicional += "Voce atacou e infringiu " + danoCausado + " de dano\n";
+                                            } else {
+                                                adResponse.mensagemAdicional += "Voce nao conseguiu causar dano ao inimigo!\n";
                                             }
 
-                                            if(personagem.getVidaAtual() <= 0){
-                                                adResponse.mensagemAdicional += "Oh nao, voce morreu!! Tera que comecar o jogo do zero...\n";
-                                                personagem.morrer();
-                                                break;
-                                            }
-                                        }else{
-                                            adResponse.mensagemAdicional += inimigo.getNome() + " foi derrotado!\n";
-                                            adResponse.mensagemAdicional += "Voce recebeu " + inimigo.getExpDada() + " de exp\n";
-                                            personagem.aumentaExp(inimigo.getExpDada());
-                                            adResponse.mensagemAdicional += "Voce ganhou " + inimigo.getOuroDado() + " pela vitoria\n";
-                                            personagem.aumentarOuro(inimigo.getOuroDado());
-                                            adResponse.mensagemAdicional += "Voce tambem recebeu o(s) seguinte(s) item(s):\n";
-                                            List<Item> dropMonstro = inimigo.dropar();
-                                            for(Item drop: dropMonstro){
-                                                adResponse.mensagemAdicional += drop.getNome() + "\n";
-                                            }
-                                            personagem.inventario.addAll(dropMonstro);
+                                            if (inimigo.getVidaAtual() > 0) {
+                                                int danoRecebido = inimigo.getDano() - personagem.getDefesa();
+                                                if (danoRecebido > 0) {
+                                                    personagem.setVidaAtual(personagem.getVidaAtual() - danoRecebido);
+                                                    adResponse.mensagemAdicional += "Voce sofreu um ataque e perdeu " + danoRecebido + " de vida\n";
+                                                } else {
+                                                    adResponse.mensagemAdicional += "Voce nao recebeu dano do inimigo!\n";
+                                                }
 
-                                            adResponse.mensagemAdicional += "Vida atual: " + personagem.getVidaAtual() + "/" + personagem.getVidaMax() + "\n";
+                                                if (personagem.getVidaAtual() <= 0) {
+                                                    adResponse.mensagemAdicional += "Oh nao, voce morreu!! Tera que comecar o jogo do zero...\n";
+                                                    personagem.morrer();
+                                                    break;
+                                                }
+                                            } else {
+                                                adResponse.mensagemAdicional += inimigo.getNome() + " foi derrotado!\n";
+                                                adResponse.mensagemAdicional += "Voce recebeu " + inimigo.getExpDada() + " de exp\n";
+                                                personagem.aumentaExp(inimigo.getExpDada());
+                                                adResponse.mensagemAdicional += "Voce ganhou " + inimigo.getOuroDado() + " pela vitoria\n";
+                                                personagem.aumentarOuro(inimigo.getOuroDado());
+                                                adResponse.mensagemAdicional += "Voce tambem recebeu o(s) seguinte(s) item(s):\n";
+                                                List<Item> dropMonstro = inimigo.dropar();
+                                                for (Item drop : dropMonstro) {
+                                                    adResponse.mensagemAdicional += drop.getNome() + "\n";
+                                                }
+                                                personagem.inventario.addAll(dropMonstro);
+
+                                                adResponse.mensagemAdicional += "Vida atual: " + personagem.getVidaAtual() + "/" + personagem.getVidaMax() + "\n";
+                                            }
                                         }
+                                        adResponse.personagem = personagem;
+                                        mysqlConnection.openConnection();
+                                        personagemDAO = new PersonagemDAO(mysqlConnection.connectionSource);
+                                        personagemDAO.update(personagem);
+                                        mysqlConnection.closeConnection();
+                                        resposta = new Gson().toJson(adResponse) + "\n";
                                     }
-                                    adResponse.personagem = personagem;
-                                    mysqlConnection.openConnection();
-                                    personagemDAO = new PersonagemDAO(mysqlConnection.connectionSource);
-                                    personagemDAO.update(personagem);
-                                    mysqlConnection.closeConnection();
-                                    resposta = new Gson().toJson(adResponse) + "\n";
                                 }
                             }
                             outToClient.writeBytes(resposta);
@@ -514,7 +548,7 @@ public class ProcessarRequisicao implements Runnable{
                     return;
                 }
             } catch (Exception e){
-                System.out.printf("Erro interno: " + e.getLocalizedMessage());
+                System.out.println("Erro interno: " + e.getMessage());
                 resposta = response.createResponse(ResponseTypes.ERRO_INTERNO);
                 try {
                     outToClient.writeBytes(resposta);

@@ -13,7 +13,7 @@ public class Response {
         Gson gson = new Gson();
 
         String resposta = gson.toJson(this);
-        System.out.println(resposta);
+        System.out.println("Json retornado: " + resposta);
         return resposta + "\n";
     }
 }

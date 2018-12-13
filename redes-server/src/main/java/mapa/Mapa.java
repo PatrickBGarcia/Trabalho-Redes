@@ -33,7 +33,7 @@ public class Mapa {
         try {
             mysqlConnection.openConnection();
             itemDAO = new ItemDAO(mysqlConnection.connectionSource);
-            itens = itemDAO.queryForAll();
+            itens = itemDAO.queryForAll().subList(0, 21);
             npc.setItensAVenda(itens);
         } catch (SQLException e) {
             System.out.println("Problemas para abrir conexão com mysql");
