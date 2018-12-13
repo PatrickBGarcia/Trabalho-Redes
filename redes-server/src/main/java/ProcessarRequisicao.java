@@ -2,9 +2,11 @@ import com.google.gson.Gson;
 import entities.DAO.ItemDAO;
 import entities.DAO.PersonagemDAO;
 import entities.MysqlConnection;
+import inimigos.Monstro;
 import itens.Item;
+import itens.combate.*;
+import itens.consumivel.Pot;
 import mapa.Sala;
-import npcs.Comerciante;
 import personagem.Personagem;
 import requests.Requisicao;
 import responses.AdditionalResponse;
@@ -17,7 +19,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ProcessarRequisicao implements Runnable{
@@ -68,36 +70,10 @@ public class ProcessarRequisicao implements Runnable{
             Response response = new Response();
             AdditionalResponse adResponse = new AdditionalResponse();
             PersonagemDAO personagemDAO = null;
-            String resposta;
-//////////////////////////////////////////////////////////////////////////////////////
-
-            try {
-                mysqlConnection.openConnection();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            Comerciante npc = new Comerciante("Joaquim");
             ItemDAO itemDAO = null;
-            try {
-                itemDAO = new ItemDAO(mysqlConnection.connectionSource);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            String resposta;
 
-            List<Item> listaItens = null;
-            try {
-                listaItens = itemDAO.queryForAll();
-                npc.setItensAVenda(listaItens);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            salaAtual.setNpc(npc);
-            try {
-                mysqlConnection.closeConnection();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-//////////////////////////////////////////////////////////////////////////////////////
+
             try {
                 if(falandoNPC){
                     switch (requisicao.acao) {
@@ -251,32 +227,100 @@ public class ProcessarRequisicao implements Runnable{
                             this.cliente.close();
                             this.cliente = null;
                             break;
+
                         case "mover":
-                            //if(NaoExisteEssaDirecaoNesseMapa){
-                            //resposta = response.createResponse(ResponseTypes.MOVER_INVALIDO);
-                            //}else{
-                            resposta = response.createResponse(ResponseTypes.SUCESSO);
-                            outToClient.writeBytes(resposta);
-                            //movePersonagem
-                            resposta = new Gson().toJson(personagem) + "\n";
-                            //}
+                            Sala novaSala = salaAtual.mover(requisicao.argumentos[0]);
+                            if(novaSala == null){
+                                resposta = response.createResponse(ResponseTypes.MOVER_INVALIDO);
+                            }else {
+                                salaAtual = novaSala;
+                                resposta = response.createResponse(ResponseTypes.SUCESSO);
+                                outToClient.writeBytes(resposta);
+                                adResponse.personagem = personagem;
+                                adResponse.mensagemAdicional = "Voce esta em " + salaAtual.getNome() + "\n";
+
+                                if (salaAtual.monstros.size() > 0) {
+                                    adResponse.mensagemAdicional += "Nesta sala existem os seguintes monstros:\n";
+                                    for(Monstro monstro: salaAtual.monstros){
+                                        adResponse.mensagemAdicional += monstro.getNome() + " - Level " + monstro.getNivel() + "\n";
+                                    }
+                                }else{
+                                    adResponse.mensagemAdicional += "Aqui e a sala onde voce pode comprar e vender itens, mas primeiro use o comando 'conversar " +
+                                            salaAtual.npc.getNome() + "'\n";
+                                }
+                                resposta = new Gson().toJson(adResponse) + "\n";
+                            }
                             outToClient.writeBytes(resposta);
                             break;
                         case "atacar":
-                            //if(!monstroExisteNaSala){
-                            //resposta = response.createResponse(ResponseTypes.ATACAR_INVALIDO);
+                            if(salaAtual.npc != null){
+                                resposta = response.createResponse(ResponseTypes.ATACAR_INVALIDO);
+                            }else{
+                                boolean existeMonstro = false;
+                                int index;
+                                for(index = 0;  index < salaAtual.monstros.size(); index++){
+                                    if(salaAtual.monstros.get(index).getNome().equals(requisicao.argumentos[0])){
+                                        existeMonstro = true;
+                                        break;
+                                    }
+                                }
 
-                            //}else{
-                            resposta = response.createResponse(ResponseTypes.SUCESSO);
-                            outToClient.writeBytes(resposta);
-                            //batalha
-                            //if(ganhou){
-                            personagem.aumentaExp(20);
-                            //ganhaLoot
-                            //}else{
-                            //personagem.morrer();
-                            resposta = new Gson().toJson(personagem) + "\n";
-                            //}
+                                if(!(existeMonstro)){
+                                    resposta = response.createResponse(ResponseTypes.ATACAR_INVALIDO);
+                                }else{
+                                    Monstro inimigo = salaAtual.monstros.get(index);
+                                    inimigo.setVidaAtual(inimigo.getVidaMax());
+                                    resposta = response.createResponse(ResponseTypes.SUCESSO);
+                                    outToClient.writeBytes(resposta);
+
+                                    adResponse.mensagemAdicional = "Comecando batalha...\n";
+                                    while(inimigo.getVidaAtual() > 0 && personagem.getVidaAtual() > 0){
+                                        int danoCausado = personagem.getDano() - inimigo.getDefesa();
+                                        if(danoCausado > 0){
+                                            inimigo.setVidaAtual(inimigo.getVidaAtual()-danoCausado);
+                                            adResponse.mensagemAdicional += "Voce atacou e infringiu " + danoCausado + " de dano\n";
+                                        }else{
+                                            adResponse.mensagemAdicional += "Voce nao conseguiu causar dano ao inimigo!\n";
+                                        }
+
+                                        if(inimigo.getVidaAtual() > 0){
+                                            int danoRecebido = inimigo.getDano() - personagem.getDefesa();
+                                            if(danoRecebido > 0){
+                                                personagem.setVidaAtual(personagem.getVidaAtual()-danoRecebido);
+                                                adResponse.mensagemAdicional += "Voce sofreu um ataque e perdeu " + danoRecebido + " de vida\n";
+                                            }else{
+                                                adResponse.mensagemAdicional += "Voce nao recebeu dano do inimigo!\n";
+                                            }
+
+                                            if(personagem.getVidaAtual() <= 0){
+                                                adResponse.mensagemAdicional += "Oh nao, voce morreu!! Tera que comecar o jogo do zero...\n";
+                                                personagem.morrer();
+                                                break;
+                                            }
+                                        }else{
+                                            adResponse.mensagemAdicional += inimigo.getNome() + " foi derrotado!\n";
+                                            adResponse.mensagemAdicional += "Voce recebeu " + inimigo.getExpDada() + " de exp\n";
+                                            personagem.aumentaExp(inimigo.getExpDada());
+                                            adResponse.mensagemAdicional += "Voce ganhou " + inimigo.getOuroDado() + " pela vitoria\n";
+                                            personagem.aumentarOuro(inimigo.getOuroDado());
+                                            adResponse.mensagemAdicional += "Voce tambem recebeu o(s) seguinte(s) item(s):\n";
+                                            List<Item> dropMonstro = inimigo.dropar();
+                                            for(Item drop: dropMonstro){
+                                                adResponse.mensagemAdicional += drop.getNome() + "\n";
+                                            }
+                                            personagem.inventario.addAll(dropMonstro);
+
+                                            adResponse.mensagemAdicional += "Vida atual: " + personagem.getVidaAtual() + "/" + personagem.getVidaMax() + "\n";
+                                        }
+                                    }
+                                    adResponse.personagem = personagem;
+                                    mysqlConnection.openConnection();
+                                    personagemDAO = new PersonagemDAO(mysqlConnection.connectionSource);
+                                    personagemDAO.update(personagem);
+                                    mysqlConnection.closeConnection();
+                                    resposta = new Gson().toJson(adResponse) + "\n";
+                                }
+                            }
                             outToClient.writeBytes(resposta);
                             break;
                         case "ver":
@@ -306,31 +350,31 @@ public class ProcessarRequisicao implements Runnable{
                                     } else {
                                         adResponse.mensagemAdicional += "Cabeca: Nenhum\n";
                                     }
-                                    if (personagem.getCapacete() != null) {
+                                    if (personagem.getArmadura() != null) {
                                         adResponse.mensagemAdicional += "Armadura: " + personagem.getArmadura().getNome() +
                                                 " - " + personagem.getArmadura().getDano() + "/" + personagem.getArmadura().getDefesa() + "\n";
                                     } else {
                                         adResponse.mensagemAdicional += "Armadura: Nenhum\n";
                                     }
-                                    if (personagem.getCapacete() != null) {
+                                    if (personagem.getEspada() != null) {
                                         adResponse.mensagemAdicional += "Espada: " + personagem.getEspada().getNome() +
                                                 " - " + personagem.getEspada().getDano() + "/" + personagem.getEspada().getDefesa() + "\n";
                                     } else {
                                         adResponse.mensagemAdicional += "Espada: Nenhum\n";
                                     }
-                                    if (personagem.getCapacete() != null) {
+                                    if (personagem.getEscudo() != null) {
                                         adResponse.mensagemAdicional += "Escudo: " + personagem.getEscudo().getNome() +
                                                 " - " + personagem.getEscudo().getDano() + "/" + personagem.getEscudo().getDefesa() + "\n";
                                     } else {
                                         adResponse.mensagemAdicional += "Escudo: Nenhum\n";
                                     }
-                                    if (personagem.getCapacete() != null) {
+                                    if (personagem.getPerneira() != null) {
                                         adResponse.mensagemAdicional += "Perneira: " + personagem.getPerneira().getNome() +
                                                 " - " + personagem.getPerneira().getDano() + "/" + personagem.getPerneira().getDefesa() + "\n";
                                     } else {
                                         adResponse.mensagemAdicional += "Perneira: Nenhum\n";
                                     }
-                                    if (personagem.getCapacete() != null) {
+                                    if (personagem.getCalcado() != null) {
                                         adResponse.mensagemAdicional += "Calcado: " + personagem.getCalcado().getNome() +
                                                 " - " + personagem.getCalcado().getDano() + "/" + personagem.getCalcado().getDefesa() + "\n";
                                     } else {
@@ -358,53 +402,53 @@ public class ProcessarRequisicao implements Runnable{
                                 boolean possuiItem = false;
                                 int i;
                                 for (i = 0; i < personagem.inventario.size(); i++) {
-                                    //Verificar o get inventario
-                                    /*if(personagem.inventario.get(i).getNome().equals(requisicao.argumentos[0])){
+                                    Item item = (Item) personagem.inventario.toArray()[i];
+                                    if(item.getNome().equals(requisicao.argumentos[0])){
                                         possuiItem = true;
                                         break;
-                                    }*/
+                                    }
                                 }
                                 if (!possuiItem) {
                                     resposta = response.createResponse(ResponseTypes.USAR_INVALIDO);
                                 } else {
                                     resposta = response.createResponse(ResponseTypes.SUCESSO);
                                     outToClient.writeBytes(resposta);
-                                    /*
-                                    Item item = personagem.inventario.get(i);
-                                    personagem.inventario.remove(i);
 
+                                    Item item = (Item) personagem.inventario.toArray()[i];
+
+                                    String nomeItem = item.getNome();
                                     if(item.categoria.equals(Item.Categoria.EQUIPAMENTO)){
-                                        adResponse.mensagemAdicional = "Colocando " + item.getNome() + "\n";
-                                        if(item.getClass().equals(Capacete.class)){
+                                        adResponse.mensagemAdicional = "Equipando " + item.getNome() + "\n";
+                                        if("bone".equals(nomeItem) || "capacete".equals(nomeItem) || "capacete_if".equals(nomeItem)){
                                             if(personagem.getCapacete() != null){
                                                 personagem.inventario.add(personagem.getCapacete());
                                             }
-                                            personagem.setCapacete((Capacete)item);
-                                        }else if(item.getClass().equals(Armadura.class)){
+                                            personagem.setCapacete(new Capacete(nomeItem, item.raridade));
+                                        }else if("moletom_computacao".equals(nomeItem) || "armadura".equals(nomeItem) || "armadura_if".equals(nomeItem)){
                                             if(personagem.getArmadura() != null){
                                                 personagem.inventario.add(personagem.getArmadura());
                                             }
-                                            personagem.setArmadura((Armadura) item);
-                                        }else if(item.getClass().equals(Espada.class)){
+                                            personagem.setArmadura(new Armadura(nomeItem, item.raridade));
+                                        }else if("bambu".equals(nomeItem) || "espada".equals(nomeItem) || "espada_if".equals(nomeItem)){
                                             if(personagem.getEspada() != null){
                                                 personagem.inventario.add(personagem.getEspada());
                                             }
-                                            personagem.setEspada((Espada) item);
-                                        }else if(item.getClass().equals(Escudo.class)){
+                                            personagem.setEspada(new Espada(nomeItem, item.raridade));
+                                        }else if("escudo_simples".equals(nomeItem) || "escudo_pesado".equals(nomeItem) || "escudo_if".equals(nomeItem)){
                                             if(personagem.getEscudo() != null){
                                                 personagem.inventario.add(personagem.getEscudo());
                                             }
-                                            personagem.setEscudo((Escudo) item);
-                                        }else if(item.getClass().equals(Perneira.class)){
+                                            personagem.setEscudo(new Escudo(nomeItem, item.raridade));
+                                        }else if("bermuda".equals(nomeItem) || "perneira_pesada".equals(nomeItem) || "perneira_if".equals(nomeItem)){
                                             if(personagem.getPerneira() != null){
                                                 personagem.inventario.add(personagem.getPerneira());
                                             }
-                                            personagem.setPerneira((Perneira) item);
+                                            personagem.setPerneira(new Perneira(nomeItem, item.raridade));
                                         }else{
                                             if(personagem.getCalcado() != null){
                                                 personagem.inventario.add(personagem.getCalcado());
                                             }
-                                            personagem.setCalcado((Calcado) item);
+                                            personagem.setCalcado(new Calcado(nomeItem, item.raridade));
                                         }
                                         personagem.recalculaDano();
                                         personagem.recalculaDefesa();
@@ -412,19 +456,23 @@ public class ProcessarRequisicao implements Runnable{
                                                 " de dano e " + personagem.getDefesa() + " de defesa\n";
                                     }else{
                                         adResponse.mensagemAdicional = "Usando " + item.getNome() + "\n";
-                                        personagem.usarPocao((Pot) item);
+                                        personagem.usarPocao(new Pot(nomeItem, item.raridade));
                                         adResponse.mensagemAdicional += "Agora voce possui " + personagem.getVidaAtual() + "/" + personagem.getVidaMax() +" de vida\n";
+                                    }
+                                    for (Iterator<Item> it = personagem.inventario.iterator(); it.hasNext();) {
+                                        if (it.next().getNome().equals(item.getNome())) {
+                                            it.remove();
+                                        }
                                     }
                                     mysqlConnection.openConnection();
                                     personagemDAO = new PersonagemDAO(mysqlConnection.connectionSource);
                                     personagemDAO.update(personagem);
                                     mysqlConnection.closeConnection();
                                     adResponse.personagem = personagem;
-                                    resposta = new Gson().toJson(adResponse) + "\n";*/
+                                    resposta = new Gson().toJson(adResponse) + "\n";
                                 }
                             }
                             outToClient.writeBytes(resposta);
-                            break;
                         case "conversar":
                             mysqlConnection.openConnection();
                             if (salaAtual.getNpc() == null) {

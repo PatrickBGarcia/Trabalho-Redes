@@ -60,7 +60,7 @@ public class Personagem {
 
     public void aumentaExp(int exp){
         this.exp += exp;
-        if(this.exp > this.expProxLevel){
+        if(this.exp >= this.expProxLevel){
             sobeNivel();
         }
     }
@@ -76,8 +76,22 @@ public class Personagem {
         this.defesa += 2;
     }
 
-    public Personagem morrer(){
-        return new Personagem(this.nome,this.senha);
+    public void morrer(){
+        this.nivel = 1;
+        this.ouro = 0;
+        this.exp = 0;
+        this.expProxLevel = 100;
+        this.forca = 5;
+        this.vidaAtual = 20;
+        this.vidaMax = 20;
+        this.defesa = 0;
+        this.dano = 5;
+        this.capacete = null;
+        this.armadura = null;
+        this.espada = null;
+        this.escudo = null;
+        this.perneira = null;
+        this.calcado = null;
     }
 
     public void recalculaDano(){
@@ -124,7 +138,6 @@ public class Personagem {
         if(this.calcado != null){
             defesa += this.calcado.defesa;
         }
-        defesa += this.defesa;
         this.defesa = defesa;
     }
 

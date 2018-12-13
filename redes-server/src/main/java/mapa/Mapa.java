@@ -1,13 +1,16 @@
 package mapa;
 
 import entities.DAO.ItemDAO;
+import entities.DAO.MonstroDAO;
 import entities.MysqlConnection;
+import inimigos.Monstro;
 import itens.Item;
 import npcs.Comerciante;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
 
 public class Mapa {
 
@@ -26,10 +29,11 @@ public class Mapa {
 
         MysqlConnection mysqlConnection = new MysqlConnection();
         ItemDAO itemDAO;
+        List<Item> itens;
         try {
             mysqlConnection.openConnection();
             itemDAO = new ItemDAO(mysqlConnection.connectionSource);
-            List<Item> itens = itemDAO.queryForAll();
+            itens = itemDAO.queryForAll();
             npc.setItensAVenda(itens);
         } catch (SQLException e) {
             System.out.println("Problemas para abrir conexão com mysql");
@@ -40,6 +44,61 @@ public class Mapa {
         } catch (IOException e) {
             System.out.println("Problemas para fechar conexão com mysql");
         }
+
+        MonstroDAO monstroDAO;
+        List<Monstro> monstros;
+        try {
+            mysqlConnection.openConnection();
+            monstroDAO = new MonstroDAO(mysqlConnection.connectionSource);
+            monstros = monstroDAO.queryForAll();
+        } catch (SQLException e) {
+            System.out.println("Problemas para abrir conexão com mysql");
+            return null;
+        }
+
+        try {
+            mysqlConnection.closeConnection();
+        } catch (IOException e) {
+            System.out.println("Problemas para fechar conexão com mysql");
+        }
+
+        for(Monstro elementoMonstro: monstros){
+            Random gerador = new Random();
+            int random = gerador.nextInt(7);
+            elementoMonstro.drop.add(itens.get(random * 3));
+            random = gerador.nextInt(7);
+            elementoMonstro.drop.add(itens.get((random * 3) + 1));
+            random = gerador.nextInt(7);
+            elementoMonstro.drop.add(itens.get((random * 3) + 2));
+        }
+
+        portao.addMonstro(monstros.get(0));
+
+        biblioteca.addMonstro(monstros.get(0));
+        biblioteca.addMonstro(monstros.get(1));
+
+        obraRU.addMonstro(monstros.get(0));
+        obraRU.addMonstro(monstros.get(1));
+
+        estacionamento.addMonstro(monstros.get(2));
+        estacionamento.addMonstro(monstros.get(3));
+
+        corredorPrimeiroAndar.addMonstro(monstros.get(3));
+        corredorPrimeiroAndar.addMonstro(monstros.get(4));
+        corredorPrimeiroAndar.addMonstro(monstros.get(5));
+        corredorPrimeiroAndar.addMonstro(monstros.get(8));
+
+        corredorSegundoAndar.addMonstro(monstros.get(4));
+        corredorSegundoAndar.addMonstro(monstros.get(5));
+        corredorSegundoAndar.addMonstro(monstros.get(6));
+
+        corredorTerceiroAndar.addMonstro(monstros.get(5));
+        corredorTerceiroAndar.addMonstro(monstros.get(6));
+        corredorTerceiroAndar.addMonstro(monstros.get(7));
+
+        corredorQuartoAndar.addMonstro(monstros.get(6));
+        corredorQuartoAndar.addMonstro(monstros.get(7));
+        corredorQuartoAndar.addMonstro(monstros.get(9));
 
         cafeteria.npc = npc;
 

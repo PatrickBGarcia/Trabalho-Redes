@@ -22,7 +22,7 @@ public class Item {
     public int vidaRegenerada;
 
     @DatabaseField(foreign = true)
-    private Personagem personagem;
+    private transient Personagem personagem;
 
     @DatabaseField
     public Raridade raridade;

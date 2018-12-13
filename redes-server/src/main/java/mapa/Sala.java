@@ -29,7 +29,25 @@ public class Sala {
         }
     }
 
-    public Sala moverPara(Direcao direcao) {
+    public Sala mover(String direcao){
+        if("norte".equals(direcao)){
+            return moverPara(Direcao.NORTE);
+        }else if("sul".equals(direcao)){
+            return moverPara(Direcao.SUL);
+        }else if("leste".equals(direcao)){
+            return moverPara(Direcao.LESTE);
+        }else if("oeste".equals(direcao)){
+            return moverPara(Direcao.OESTE);
+        }else if("acima".equals(direcao)){
+            return moverPara(Direcao.A_CIMA);
+        }else if("abaixo".equals(direcao)){
+            return moverPara(Direcao.ABAIXO);
+        }else{
+            return null;
+        }
+    }
+
+    private Sala moverPara(Direcao direcao) {
         if(salaAoRedor.get(direcao) != null) {
             return salaAoRedor.get(direcao);
         }
