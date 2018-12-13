@@ -10,12 +10,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="482.0" prefWidth="859.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientController">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <TextArea id="txtHistorico" fx:id="txtHistorico" editable="false" layoutX="16.0" layoutY="14.0" prefHeight="382.0" prefWidth="600.0" />
+            <TextArea id="txtHistorico" fx:id="txtHistorico" editable="false" layoutX="16.0" layoutY="14.0" prefHeight="382.0" prefWidth="600.0" wrapText="true" />
             <TextField id="txtComando" fx:id="txtComando" layoutX="16.0" layoutY="406.0" prefHeight="65.0" prefWidth="600.0" />
             <AnchorPane layoutX="538.0" layoutY="426.0">
                <children>
@@ -92,7 +91,7 @@
                     </rowConstraints>
                      <children>
                         <Label text="INVENTÁRIO" />
-                        <Label id="inventario" fx:id="inventario" prefHeight="150.0" prefWidth="216.0" GridPane.rowIndex="1" />
+                        <TextArea id="inventario" fx:id="inventario" editable="false" prefHeight="382.0" prefWidth="600.0" wrapText="true" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>

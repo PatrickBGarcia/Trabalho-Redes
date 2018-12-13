@@ -62,7 +62,7 @@ public class ClientController implements Initializable {
 
     //INVENTARIO
     @FXML
-    public Label inventario;
+    public TextArea inventario;
 
     //HISTORICO
     @FXML
@@ -92,10 +92,18 @@ public class ClientController implements Initializable {
             @Override
             public void changed(ObservableValue<?> observable, Object oldValue,
                                 Object newValue) {
-                txtHistorico.setScrollTop(Double.MAX_VALUE); //this will scroll to the bottom
-                //use Double.MIN_VALUE to scroll to the top
+                txtHistorico.setScrollTop(Double.MAX_VALUE);
             }
         });
+
+        inventario.textProperty().addListener(new ChangeListener<Object>() {
+            @Override
+            public void changed(ObservableValue<?> observable, Object oldValue,
+                                Object newValue) {
+                txtHistorico.setScrollTop(Double.MAX_VALUE);
+            }
+        });
+
 
         txtHistorico.appendText(
                 "Bem vindx ao Anglo RPG!!\n" +
@@ -123,7 +131,6 @@ public class ClientController implements Initializable {
             return null;
         }
 
-        //outToServer = null;
         try {
             outToServer.writeBytes(json+"\n");
         } catch (IOException e) {

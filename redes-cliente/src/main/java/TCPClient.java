@@ -5,9 +5,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.*;
-import java.net.*;
-
 public class TCPClient extends Application {
 
     @Override
