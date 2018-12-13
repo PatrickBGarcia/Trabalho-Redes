@@ -104,6 +104,8 @@ public class ClientController implements Initializable {
             }
         });
 
+        txtHistorico.setWrapText(true);
+        inventario.setWrapText(true);
 
         txtHistorico.appendText(
                 "Bem vindx ao Anglo RPG!!\n" +
@@ -146,6 +148,8 @@ public class ClientController implements Initializable {
             return null;
         }
 
+        System.out.println(retorno);
+
         Response response = new Gson().fromJson(retorno, Response.class);
         if(response.codigo != 1){
             return response;
@@ -156,6 +160,11 @@ public class ClientController implements Initializable {
             respostaAdicional = inFromServer.readLine();
         } catch (IOException e) {
             this.txtHistorico.appendText("PROBLEMAS PARA LER ALTERAÇÕES NO PERSONAGEM\n");
+            return response;
+        }
+
+        if(respostaAdicional.contains("\"descricao\"")){
+            response = new Gson().fromJson(respostaAdicional, Response.class);
             return response;
         }
 

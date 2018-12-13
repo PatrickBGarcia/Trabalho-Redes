@@ -12,6 +12,8 @@ public class Response {
 
         Gson gson = new Gson();
 
-        return gson.toJson(this) + "\n";
+        String resposta = gson.toJson(this);
+        System.out.println(resposta);
+        return resposta + "\n";
     }
 }

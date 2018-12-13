@@ -36,10 +36,10 @@ public enum ResponseTypes {
             case COMANDO_INVALIDO:
                 return "Comando invalido";
             case ERRO_INTERNO:
-                return "Erro interno";
+                return "Erro interno no servidor";
 
                 default:
-                    return "Erro interno";
+                    return "Erro interno no servidor";
         }
     }
 

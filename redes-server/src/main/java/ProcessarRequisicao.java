@@ -500,16 +500,28 @@ public class ProcessarRequisicao implements Runnable{
                             break;
                     }
                 }
-            } catch (IOException ex) {
+            } catch (IOException | SQLException e) {
+                if(e instanceof IOException){
+                    System.out.println("Problema de leitura/escrita");
+                }else{
+                    System.out.println("Problemas com banco de dados");
+                }
                 resposta = response.createResponse(ResponseTypes.ERRO_INTERNO);
                 try {
                     outToClient.writeBytes(resposta);
-                } catch (IOException e) {
+                } catch (IOException ex) {
                     System.out.println("Problemas para informar erro interno");
                     return;
                 }
-            } catch (SQLException e) {
-                System.out.println("Problemas com banco de dados");
+            } catch (Exception e){
+                System.out.printf("Erro interno: " + e.getLocalizedMessage());
+                resposta = response.createResponse(ResponseTypes.ERRO_INTERNO);
+                try {
+                    outToClient.writeBytes(resposta);
+                } catch (IOException ex) {
+                    System.out.println("Problemas para informar erro interno");
+                    return;
+                }
             }
         }
     }
