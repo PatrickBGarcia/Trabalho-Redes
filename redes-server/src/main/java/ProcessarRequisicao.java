@@ -72,7 +72,7 @@ public class ProcessarRequisicao implements Runnable{
 
             //PARA TESTES
             Sala sala = new Sala("Teste");
-            Comerciante n = new Comerciante();
+            Comerciante n = new Comerciante("roberto");
             try {
                 if(falandoNPC){
                     switch (requisicao.acao) {
@@ -354,20 +354,7 @@ public class ProcessarRequisicao implements Runnable{
                         case "conversar":
                             mysqlConnection.openConnection();
 
-                            n.setNome("npc");
-                            n.setId(1);
-                            Item item = new Item();
-                            item.setNome("martelo teste");
-                            item.setValor(20);
-                            List<Item> li = new ArrayList<Item>();
-                            li.add(item);
-                            item = new Item();
-                            item.setNome("armadura teste");
-                            item.setValor(2000);
-                            li.add(item);
-                            n.setItensAVenda(li);
-                            sala.setNpc(n);
-                            if (sala.getNpc().getId() == 0) {
+                            if (sala.getNpc() != null) {
                                 resposta = response.createResponse(ResponseTypes.CONVERSAR_INVALIDO);
                             } else {
                                 falandoNPC = true;
@@ -375,9 +362,9 @@ public class ProcessarRequisicao implements Runnable{
                                 outToClient.writeBytes(resposta);
                                 adResponse.personagem = personagem;
                                 adResponse.mensagemAdicional = "Tia do Bar: Ola, "+personagem.getNome()+"!\nEssas sao nossas ofertas: \n";
-                                for (Item i: li) {
-                                    adResponse.mensagemAdicional +="Item: "+i.getNome()+"\t\tValor: "+ i.getValor()+"\n";
-                                }
+                                //for (Item i: li) {
+                                //    adResponse.mensagemAdicional +="Item: "+i.getNome()+"\t\tValor: "+ i.getValor()+"\n";
+                                //}
                                 adResponse.mensagemAdicional += "Ou voce pode vender alguns de seus itens tambem.\n";
 
                                 //adResponse.mensagemAdicional = "Tia do bar: Ola,"+personagem.getNome()+"!\n";

@@ -1,7 +1,5 @@
 package mapa;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 import inimigos.Monstro;
 import npcs.Comerciante;
 
@@ -12,12 +10,10 @@ import java.util.Map;
 
 public class Sala {
 
-    private int id;
     private final String nome;
-    private Comerciante npc = new Comerciante();
+    public Comerciante npc;
     public HashMap<Direcao, Sala> salaAoRedor = new HashMap<>();
     public ArrayList<Monstro> monstros = new ArrayList<>();
-
 
     public Sala(String nome) {
        this.nome = nome;
@@ -46,14 +42,6 @@ public class Sala {
 
     public void removeMonstro(Monstro monstro){
         this.monstros.remove(monstro);
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNome() {

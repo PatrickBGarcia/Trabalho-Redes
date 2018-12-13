@@ -4,6 +4,7 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import entities.DAO.MonstroDAO;
 import inimigos.Boss;
+import inimigos.Minichefe;
 import inimigos.Monstro;
 import inimigos.TipoMonstro;
 import org.junit.Test;
@@ -64,5 +65,44 @@ public class MonstroTest {
 
         mysqlConnection.closeConnection();
 
+    }
+
+    @Test
+    public void populaBanco() throws SQLException, IOException {
+        MysqlConnection mysqlConnection = new MysqlConnection();
+        mysqlConnection.openConnection();
+        MonstroDAO monstroDAO = new MonstroDAO(mysqlConnection.connectionSource);
+
+        Monstro monstro = new Monstro(1, "calouro");
+        monstroDAO.create(monstro);
+
+        monstro = new Monstro(2, "veterano");
+        monstroDAO.create(monstro);
+
+        monstro = new Monstro(3, "troll");
+        monstroDAO.create(monstro);
+
+        monstro = new Monstro(4, "chato");
+        monstroDAO.create(monstro);
+
+        monstro = new Monstro(5, "voluntario");
+        monstroDAO.create(monstro);
+
+        monstro = new Monstro(6, "bolsista");
+        monstroDAO.create(monstro);
+
+        monstro = new Monstro(7, "petiano");
+        monstroDAO.create(monstro);
+
+        monstro = new Minichefe(8, "professor");
+        monstroDAO.create(monstro);
+
+        monstro = new Minichefe(9, "goncalinho");
+        monstroDAO.create(monstro);
+
+        monstro = new Boss(10, "pulla");
+        monstroDAO.create(monstro);
+
+        mysqlConnection.closeConnection();
     }
 }

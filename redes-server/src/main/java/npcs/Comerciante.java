@@ -1,31 +1,20 @@
 package npcs;
 
-import com.j256.ormlite.dao.ForeignCollection;
-import com.j256.ormlite.field.DataType;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
-import com.j256.ormlite.table.DatabaseTable;
 import itens.Item;
-import javafx.print.Collation;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
-@DatabaseTable(tableName = "comerciante")
 public class Comerciante {
-    @DatabaseField(generatedId = true)
-    private int id;
-    @DatabaseField(canBeNull = false)
     private String nome;
-    @ForeignCollectionField
     private Collection<Item> itensAVenda;
 
+    public Comerciante(String nome){
+        this.nome = nome;
+    }
 
     public Collection<Item> ofertas(){
         return this.itensAVenda;
     }
-
-    public Comerciante(){}
 
     public void adicionarItem(Item item){
         item.valor += 20;
@@ -42,14 +31,6 @@ public class Comerciante {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Collection<Item> getItensAVenda() {

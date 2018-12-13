@@ -30,7 +30,6 @@ public class Monstro {
     @DatabaseField
     public TipoMonstro tipoMonstro = TipoMonstro.MONSTRO;
 
-
     //@DatabaseField
     public ArrayList<Item> drop = new ArrayList<Item>();
 
@@ -41,17 +40,16 @@ public class Monstro {
     }
 
 
-
-
     public Monstro(int nivel, String nome){
         this.nome = nome;
         this.nivel = nivel;
-        this.vidaMax = 20 * nivel;
+        this.vidaMax = 7 * nivel;
         this.vidaAtual = this.vidaMax;
         this.expDada = 20 * nivel;
         this.defesa = (int)(1.5 * nivel);
         this.dano = 3 * nivel;
         this.ouroDado = 2 * nivel;
+        this.tipoMonstro = TipoMonstro.MONSTRO;
     }
 
     public void possiveisDrops(ArrayList<Item> itens){

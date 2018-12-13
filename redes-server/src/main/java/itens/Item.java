@@ -11,7 +11,7 @@ public class Item {
     @DatabaseField(generatedId = true)
     private int id;
     @DatabaseField(canBeNull = false)
-    private String nome;
+    protected String nome;
     @DatabaseField
     public int valor;
     @DatabaseField
@@ -21,8 +21,6 @@ public class Item {
     @DatabaseField
     public int vidaRegenerada;
 
-    @DatabaseField(foreign = true)
-    private Comerciante comerciante;
     @DatabaseField(foreign = true)
     private Personagem personagem;
 
@@ -103,14 +101,6 @@ public class Item {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
-    }
-
-    public Comerciante getComerciante() {
-        return comerciante;
-    }
-
-    public void setComerciante(Comerciante comerciante) {
-        this.comerciante = comerciante;
     }
 
     public Personagem getPersonagem() {
