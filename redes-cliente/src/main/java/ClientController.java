@@ -295,6 +295,14 @@ public class ClientController implements Initializable {
 
                 this.txtHistorico.appendText(response.adicional.mensagemAdicional);
                 limpaPersonagem();
+
+                try {
+                    clientSocket.close();
+                } catch (IOException e) {
+                    this.txtHistorico.appendText("Erro para fechar conexão\n");
+                }
+
+                clientSocket = null;
                 return;
             case "mover":
                 if (parsedText.length != 2){
