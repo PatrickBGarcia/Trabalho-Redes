@@ -1,4 +1,5 @@
 import com.google.gson.Gson;
+import entities.DAO.ItemDAO;
 import entities.DAO.PersonagemDAO;
 import entities.MysqlConnection;
 import itens.Item;
@@ -16,6 +17,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProcessarRequisicao implements Runnable{
     private Socket cliente;
@@ -66,12 +69,39 @@ public class ProcessarRequisicao implements Runnable{
             AdditionalResponse adResponse = new AdditionalResponse();
             PersonagemDAO personagemDAO = null;
             String resposta;
+//////////////////////////////////////////////////////////////////////////////////////
 
+            try {
+                mysqlConnection.openConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            Comerciante npc = new Comerciante("Joaquim");
+            ItemDAO itemDAO = null;
+            try {
+                itemDAO = new ItemDAO(mysqlConnection.connectionSource);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            List<Item> listaItens = null;
+            try {
+                listaItens = itemDAO.queryForAll();
+                npc.setItensAVenda(listaItens);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            salaAtual.setNpc(npc);
+            try {
+                mysqlConnection.closeConnection();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+//////////////////////////////////////////////////////////////////////////////////////
             try {
                 if(falandoNPC){
                     switch (requisicao.acao) {
                         case "sair":
-
                             falandoNPC = false;
                             resposta = response.createResponse(ResponseTypes.SUCESSO);
                             outToClient.writeBytes(resposta);
@@ -81,33 +111,83 @@ public class ProcessarRequisicao implements Runnable{
                             outToClient.writeBytes(resposta);
                             break;
                         case "vender":
-                            //if(NaoExisteItemInformado){
-                            if(true){
+                            if(personagem.getInventario().size()==0){
                                 resposta = response.createResponse(ResponseTypes.COMPRA_VENDA_ITEM_NAO_ENCONTRADO);
                             }else{
-                            //    if(naoTemAQuantidadeInformada){
-                            //        resposta = response.createResponse(ResponseTypes.SEM_QUANTIDADE_PRA_VENDER);
-                            //    }else{
-                                resposta = response.createResponse(ResponseTypes.SUCESSO);
-                                outToClient.writeBytes(resposta);
-                                resposta = new Gson().toJson(personagem) + "\n";
-                            //    }
-                            }
+                                if(Integer.parseInt(requisicao.argumentos[1])>1){
+                                    resposta = response.createResponse(ResponseTypes.COMANDO_INVALIDO);
+                                }
+                                else {
+                                    int contItens = 0;
+                                    for (Item itensInventario : personagem.getInventario()) {
+                                        if (requisicao.argumentos[0].equals(itensInventario.getNome())) {
+                                            contItens++;
+                                        }
+                                    }
+                                    if (contItens < Integer.parseInt(requisicao.argumentos[1])) {
+                                        resposta = response.createResponse(ResponseTypes.SEM_QUANTIDADE_PRA_VENDER);
+                                    } else {
+                                        mysqlConnection.openConnection();
+                                        for (Item itensInventario : personagem.getInventario()) {
+                                            if (contItens > 0) {
+                                                if (requisicao.argumentos[0].equals(itensInventario.getNome())) {
+                                                    personagem.inventario.remove(itensInventario);
+                                                    personagem.setOuro(personagem.getOuro() + itensInventario.valor);
 
+                                                    List<Item> itemBanco = itemDAO.queryForEq("id",itensInventario.getId());
+                                                    itemDAO.delete(itemBanco);
+                                                    break;
+                                                }
+                                            } else break;
+                                        }
+                                        personagemDAO = new PersonagemDAO(mysqlConnection.connectionSource);
+                                        personagemDAO.update(personagem);
+
+                                        resposta = response.createResponse(ResponseTypes.SUCESSO);
+                                        outToClient.writeBytes(resposta);
+
+                                        mysqlConnection.closeConnection();
+                                        adResponse.personagem = personagem;
+                                        adResponse.mensagemAdicional = "Item vendido!";
+                                        resposta = new Gson().toJson(adResponse) + "\n";
+                                    }
+                                }
+                            }
                             outToClient.writeBytes(resposta);
                             break;
                         case "comprar":
-                            //if(NaoExisteItemInformado){
-                            //    resposta = response.createResponse(ResponseTypes.COMPRA_VENDA_ITEM_NAO_ENCONTRADO);
-                            //}else{
-                            //    if(naoPossuiOuroSuficiente){
-                            //        resposta = response.createResponse(ResponseTypes.SEM_OURO_SUFICIENTE);
-                            //    }else{
-                            resposta = response.createResponse(ResponseTypes.SUCESSO);
-                            outToClient.writeBytes(resposta);
-                            resposta = new Gson().toJson(personagem) + "\n";
-                            //    }
-                            //}
+                            mysqlConnection.openConnection();
+                            if(Integer.parseInt(requisicao.argumentos[1])>1){
+                                resposta = response.createResponse(ResponseTypes.COMANDO_INVALIDO);
+                            }
+                            else {
+                                if (salaAtual.getNpc().getItensAVenda().size() == 0) {
+                                    resposta = response.createResponse(ResponseTypes.COMPRA_VENDA_ITEM_NAO_ENCONTRADO);
+                                } else {
+                                    for (Item itensVenda : salaAtual.npc.getItensAVenda()) {
+                                        if (itensVenda.getNome().equals(requisicao.argumentos[0])) {
+                                            if (personagem.getOuro() < itensVenda.getValor()) {
+                                                resposta = response.createResponse(ResponseTypes.SEM_OURO_SUFICIENTE);
+                                                break;
+                                            } else {
+                                                personagem.inventario.add(itensVenda);
+                                                personagem.setOuro(personagem.getOuro() - itensVenda.valor);
+                                                break;
+                                            }
+                                        } else {
+                                            resposta = response.createResponse(ResponseTypes.COMPRA_VENDA_ITEM_NAO_ENCONTRADO);
+                                        }
+                                    }
+                                    personagemDAO = new PersonagemDAO(mysqlConnection.connectionSource);
+                                    personagemDAO.update(personagem);
+                                    resposta = response.createResponse(ResponseTypes.SUCESSO);
+                                    outToClient.writeBytes(resposta);
+                                    adResponse.personagem = personagem;
+                                    adResponse.mensagemAdicional = "Item comprado!";
+                                    resposta = new Gson().toJson(adResponse) + "\n";
+                                    mysqlConnection.closeConnection();
+                                }
+                            }
                             outToClient.writeBytes(resposta);
                             break;
                         default:
@@ -347,8 +427,7 @@ public class ProcessarRequisicao implements Runnable{
                             break;
                         case "conversar":
                             mysqlConnection.openConnection();
-
-                            if (salaAtual.getNpc() != null) {
+                            if (salaAtual.getNpc() == null) {
                                 resposta = response.createResponse(ResponseTypes.CONVERSAR_INVALIDO);
                             } else {
                                 falandoNPC = true;
@@ -356,12 +435,10 @@ public class ProcessarRequisicao implements Runnable{
                                 outToClient.writeBytes(resposta);
                                 adResponse.personagem = personagem;
                                 adResponse.mensagemAdicional = "Tia do Bar: Ola, "+personagem.getNome()+"!\nEssas sao nossas ofertas: \n";
-                                //for (Item i: li) {
-                                //    adResponse.mensagemAdicional +="Item: "+i.getNome()+"\t\tValor: "+ i.getValor()+"\n";
-                                //}
+                                for (Item i: salaAtual.getNpc().getItensAVenda()) {
+                                    adResponse.mensagemAdicional +="Item: "+i.getNome()+"\t\tValor: "+ i.getValor()+"\n";
+                                }
                                 adResponse.mensagemAdicional += "Ou voce pode vender alguns de seus itens tambem.\n";
-
-                                //adResponse.mensagemAdicional = "Tia do bar: Ola,"+personagem.getNome()+"!\n";
                                 resposta = new Gson().toJson(adResponse) + "\n";
                             }
                             mysqlConnection.closeConnection();
