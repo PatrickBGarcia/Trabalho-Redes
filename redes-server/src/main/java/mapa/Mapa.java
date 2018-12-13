@@ -1,5 +1,14 @@
 package mapa;
 
+import entities.DAO.ItemDAO;
+import entities.MysqlConnection;
+import itens.Item;
+import npcs.Comerciante;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
 public class Mapa {
 
     public static Sala iniciar(){
@@ -12,6 +21,27 @@ public class Mapa {
         Sala corredorSegundoAndar = new Sala("Corredor 2 Andar");
         Sala corredorTerceiroAndar = new Sala("Corredor 3 Andar");
         Sala corredorQuartoAndar = new Sala("Corredor 4 Andar");
+
+        Comerciante npc = new Comerciante("roberto");
+
+        MysqlConnection mysqlConnection = new MysqlConnection();
+        ItemDAO itemDAO;
+        try {
+            mysqlConnection.openConnection();
+            itemDAO = new ItemDAO(mysqlConnection.connectionSource);
+            List<Item> itens = itemDAO.queryForAll();
+            npc.setItensAVenda(itens);
+        } catch (SQLException e) {
+            System.out.println("Problemas para abrir conexão com mysql");
+            return null;
+        }
+        try {
+            mysqlConnection.closeConnection();
+        } catch (IOException e) {
+            System.out.println("Problemas para fechar conexão com mysql");
+        }
+
+        cafeteria.npc = npc;
 
         corredorQuartoAndar.addAdjacente(corredorTerceiroAndar, Direcao.ABAIXO);
         corredorTerceiroAndar.addAdjacente(corredorQuartoAndar, Direcao.A_CIMA);

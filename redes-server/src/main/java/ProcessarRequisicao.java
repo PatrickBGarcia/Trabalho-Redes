@@ -2,8 +2,6 @@ import com.google.gson.Gson;
 import entities.DAO.PersonagemDAO;
 import entities.MysqlConnection;
 import itens.Item;
-import itens.combate.*;
-import itens.consumivel.Pot;
 import mapa.Sala;
 import npcs.Comerciante;
 import personagem.Personagem;
@@ -18,16 +16,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public class ProcessarRequisicao implements Runnable{
     private Socket cliente;
+    private Sala salaAtual;
     MysqlConnection mysqlConnection = new MysqlConnection();
 
-    public ProcessarRequisicao(Socket cliente) {
+    public ProcessarRequisicao(Socket cliente, Sala salaAtual) {
         this.cliente = cliente;
+        this.salaAtual = salaAtual;
     }
 
     @Override
@@ -72,7 +69,7 @@ public class ProcessarRequisicao implements Runnable{
 
             //PARA TESTES
             Sala sala = new Sala("Teste");
-            Comerciante n = new Comerciante("roberto");
+            Comerciante n = new Comerciante("iolanda");
             try {
                 if(falandoNPC){
                     switch (requisicao.acao) {
