@@ -67,9 +67,6 @@ public class ProcessarRequisicao implements Runnable{
             PersonagemDAO personagemDAO = null;
             String resposta;
 
-            //PARA TESTES
-            Sala sala = new Sala("Teste");
-            Comerciante n = new Comerciante("iolanda");
             try {
                 if(falandoNPC){
                     switch (requisicao.acao) {
@@ -351,7 +348,7 @@ public class ProcessarRequisicao implements Runnable{
                         case "conversar":
                             mysqlConnection.openConnection();
 
-                            if (sala.getNpc() != null) {
+                            if (salaAtual.getNpc() != null) {
                                 resposta = response.createResponse(ResponseTypes.CONVERSAR_INVALIDO);
                             } else {
                                 falandoNPC = true;

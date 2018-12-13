@@ -22,7 +22,7 @@ public class Mapa {
         Sala corredorTerceiroAndar = new Sala("Corredor 3 Andar");
         Sala corredorQuartoAndar = new Sala("Corredor 4 Andar");
 
-        Comerciante npc = new Comerciante("roberto");
+        Comerciante npc = new Comerciante("iolanda");
 
         MysqlConnection mysqlConnection = new MysqlConnection();
         ItemDAO itemDAO;
