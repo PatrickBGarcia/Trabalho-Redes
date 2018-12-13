@@ -4,6 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 import npcs.Comerciante;
+import personagem.Personagem;
 
 @DatabaseTable(tableName = "item")
 public class Item {
@@ -22,6 +23,8 @@ public class Item {
 
     @DatabaseField(foreign = true)
     private Comerciante comerciante;
+    @DatabaseField(foreign = true)
+    private Personagem personagem;
 
     @DatabaseField
     public Raridade raridade;
@@ -100,5 +103,21 @@ public class Item {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public Comerciante getComerciante() {
+        return comerciante;
+    }
+
+    public void setComerciante(Comerciante comerciante) {
+        this.comerciante = comerciante;
+    }
+
+    public Personagem getPersonagem() {
+        return personagem;
+    }
+
+    public void setPersonagem(Personagem personagem) {
+        this.personagem = personagem;
     }
 }

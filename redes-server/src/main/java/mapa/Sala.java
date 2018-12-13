@@ -3,17 +3,18 @@ package mapa;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import inimigos.Monstro;
+import npcs.Comerciante;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-@DatabaseTable(tableName = "sala")
+
 public class Sala {
-    @DatabaseField(generatedId = true)
+
     private int id;
-    @DatabaseField(canBeNull = false)
     private final String nome;
+    private Comerciante npc = new Comerciante();
     public HashMap<Direcao, Sala> salaAoRedor = new HashMap<>();
     public ArrayList<Monstro> monstros = new ArrayList<>();
 
@@ -73,5 +74,13 @@ public class Sala {
 
     public void setMonstros(ArrayList<Monstro> monstros) {
         this.monstros = monstros;
+    }
+
+    public Comerciante getNpc() {
+        return npc;
+    }
+
+    public void setNpc(Comerciante npc) {
+        this.npc = npc;
     }
 }

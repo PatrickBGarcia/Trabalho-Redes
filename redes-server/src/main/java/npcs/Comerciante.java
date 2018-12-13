@@ -17,18 +17,16 @@ public class Comerciante {
     private int id;
     @DatabaseField(canBeNull = false)
     private String nome;
-    //@ForeignCollectionField //VERIFICAR ARRAYLIST
-
     @ForeignCollectionField
     private Collection<Item> itensAVenda;
-    //@DatabaseField(dataType= DataType.SERIALIZABLE, foreign = true)
-    //public ArrayList<Item> itensAVenda = new ArrayList<Item>();
+
 
     public Collection<Item> ofertas(){
         return this.itensAVenda;
     }
 
     public Comerciante(){}
+
     public void adicionarItem(Item item){
         item.valor += 20;
         this.itensAVenda.add(item);

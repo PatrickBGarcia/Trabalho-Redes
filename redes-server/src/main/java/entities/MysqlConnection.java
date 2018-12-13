@@ -12,7 +12,7 @@ public class MysqlConnection {
     private String url = "jdbc:mysql://localhost:3306/ds";
     private String dbName = "ds";
     private String userName = "root";
-    private String dbpassword = "";
+    private String dbpassword = "1234";
     public ConnectionSource connectionSource;
 
 

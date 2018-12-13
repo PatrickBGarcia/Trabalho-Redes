@@ -1,12 +1,14 @@
 package personagem;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 import itens.Item;
 import itens.combate.*;
 import itens.consumivel.Pot;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 @DatabaseTable(tableName = "personagem")
 public class Personagem {
@@ -46,8 +48,9 @@ public class Personagem {
     private Perneira perneira;
     @DatabaseField(foreign=true)
     private Calcado calcado;
-    //@DatabaseField(foreign = true)   PESQUISAR ARRAY NO ORMLite
-    public ArrayList<Item> inventario = new ArrayList<>();
+
+    @ForeignCollectionField
+    public Collection<Item> inventario;
 
     public Personagem(){}
     public Personagem(String nome,String senha){
@@ -279,11 +282,12 @@ public class Personagem {
         this.dano = dano;
     }
 
-    public ArrayList<Item> getInventario() {
+    public Collection<Item> getInventario() {
         return inventario;
     }
 
-    public void setInventario(ArrayList<Item> inventario) {
+    public void setInventario(Collection<Item> inventario) {
         this.inventario = inventario;
     }
+
 }
